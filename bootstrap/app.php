@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Memberitahu Laravel bahwa 'role' merujuk ke file RoleManager kita
+        $middleware->alias([
+            'role' => \App\Http\Middleware\RoleManager::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
