@@ -52,20 +52,23 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
     Route::get('/guru/dashboard', function () {
         return view('guru.dashboard');
     })->name('guru.dashboard');
+
+    // Tambahkan ini: Hanya index, edit, dan update
+    Route::resource('/guru/nilai', App\Http\Controllers\Guru\NilaiController::class)
+        ->only(['index', 'edit', 'update'])
+        ->names('guru.nilai');
 });
 
 // --- GRUP ROUTE KHUSUS SISWA ---
 Route::middleware(['auth', 'role:siswa'])->group(function () {
-    Route::get('/siswa/dashboard', function () {
-        return view('siswa.dashboard');
-    })->name('siswa.dashboard');
+    // Gunakan Controller agar bisa mengambil data nilai dari database
+    Route::get('/siswa/dashboard', [App\Http\Controllers\Siswa\DashboardController::class, 'index'])->name('siswa.dashboard');
 });
 
 // --- GRUP ROUTE KHUSUS AUDIT ---
 Route::middleware(['auth', 'role:audit'])->group(function () {
-    Route::get('/audit/dashboard', function () {
-        return view('audit.dashboard');
-    })->name('audit.dashboard');
+    // Pastikan menggunakan Controller agar data Log Aktivitas bisa muncul
+    Route::get('/audit/dashboard', [App\Http\Controllers\Audit\AuditController::class, 'index'])->name('audit.dashboard');
 });
 
 // --- ROUTE PROFILE ---
