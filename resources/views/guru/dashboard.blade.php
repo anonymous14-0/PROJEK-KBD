@@ -1,38 +1,54 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard Guru') }}
+    
+    <!-- Header Judul Halaman -->
+    <header class="bg-white py-6 px-10 shadow-sm border-b border-gray-100">
+        <h2 class="font-black text-xl text-gray-900 leading-tight uppercase tracking-tight">
+            DASHBOARD GURU
         </h2>
-    </x-slot>
+    </header>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{-- Sapaan User --}}
-                    <h3 class="text-lg font-bold">Selamat Datang, {{ Auth::user()->nama_lengkap }}!</h3>
-                    <p class="mt-2 text-gray-600">Anda masuk sebagai **Tenaga Pengajar**. Silakan kelola data akademik siswa Anda di bawah ini.</p>
+    <!-- Content Utama -->
+    <div class="py-12 bg-[#f3f4f6] min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="bg-white overflow-hidden shadow-[0_10px_50px_rgba(0,0,0,0.1)] rounded-[2rem] border-l-[15px] border-[#eab308] min-h-[500px]">
+                <div class="p-10 md:p-20">
                     
-                    {{-- Grid Menu Guru --}}
-                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Welcome Text -->
+                    <div class="mb-16">
+                        <h3 class="text-4xl font-bold font-serif text-gray-900 tracking-tight">Selamat Datang, Guru Pengajar!</h3>
+                        <p class="mt-2 text-lg text-gray-400 font-medium italic">Semua informasi tentang nilai dan Jadwal siswa bisa dilihat disini!</p>
+                    </div>
+
+                    <!-- Menu Cards Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl">
                         
-                        {{-- Card Input/Edit Nilai --}}
-                        <a href="{{ route('guru.nilai.index') }}" class="block p-6 bg-yellow-50 border border-yellow-100 rounded-lg hover:bg-yellow-100 transition shadow-sm group">
-                            <div class="text-yellow-600 font-bold text-xs uppercase tracking-wider">Manajemen Akademik</div>
-                            <div class="text-2xl font-bold text-gray-800 mt-1 group-hover:text-yellow-700">Input & Edit Nilai</div>
-                            <p class="text-sm text-yellow-600 mt-2">Kelola nilai harian, UTS, dan UAS siswa secara real-time.</p>
+                        <!-- Card Manajemen Akademik (Warna Kuning Pucat) -->
+                        <a href="{{ route('admin.guru.index') }}" class="group block p-10 bg-[#fffdf0] rounded-[2rem] transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-start text-left">
+                            <div class="text-[#d4d957] font-black text-sm uppercase tracking-widest mb-3">Manajemen Akademik</div>
+                            <div class="text-4xl font-black text-gray-950 mb-2 leading-none">Input & Edit Nilai</div>
+                            <p class="text-[11px] text-gray-400 font-medium max-w-[250px]">Semua informasi tentang manajemen akademik ada disini!</p>
+                            <p class="text-[11px] text-[#7dd3fc] font-bold mt-3 underline decoration-2 underline-offset-4">Klik untuk mengelola manajemen akademik</p>
                         </a>
 
-                        {{-- Card Jadwal (Placeholder untuk pengembangan selanjutnya) --}}
-                        <div class="p-6 bg-blue-50 border border-blue-100 rounded-lg shadow-sm opacity-75">
-                            <div class="text-blue-600 font-bold text-xs uppercase tracking-wider">Informasi</div>
-                            <div class="text-2xl font-bold text-gray-800 mt-1">Jadwal Mengajar</div>
-                            <p class="text-sm text-blue-600 mt-2">Fitur jadwal mata pelajaran akan segera tersedia.</p>
-                        </div>
+                        <!-- Card Informasi (Warna Biru Pucat) -->
+                        <a href="{{ route('admin.siswa.index') }}" class="group block p-10 bg-[#eef3ff] rounded-[2rem] transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-start text-left">
+                            <div class="text-[#8e9eff] font-black text-sm uppercase tracking-widest mb-3">Informasi</div>
+                            <div class="text-4xl font-black text-gray-950 mb-2 leading-none">Jadwal Mengajar</div>
+                            <p class="text-[11px] text-gray-400 font-medium max-w-[250px]">Semua informasi terkait jadwal mata pelajaran tersedia disini!</p>
+                            <p class="text-[11px] text-[#7dd3fc] font-bold mt-3 underline decoration-2 underline-offset-4">Klik untuk mengelola jadwal mengajar</p>
+                        </a>
 
-                    </div> {{-- End Grid --}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&display=swap');
+        .font-serif {
+            font-family: 'Crimson Pro', serif;
+        }
+    </style>
 </x-app-layout>
