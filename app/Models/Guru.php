@@ -9,24 +9,44 @@ class Guru extends Model
 {
     use HasFactory;
 
+    // Nama tabel
     protected $table = 'guru';
 
-    // Jika di database kamu tidak ada kolom auto-increment id, 
-    // dan menggunakan NIP sebagai kunci utama:
-    protected $primaryKey = 'nip'; 
-    public $incrementing = false; // NIP biasanya bukan auto-incrementing integer
+    // Primary key sesuai database
+    protected $primaryKey = 'id_guru';
 
-    // INI KUNCINYA: Matikan timestamp karena kolomnya tidak ada di DB
-    public $timestamps = false;
+    // Karena custom key
+    public $incrementing = true;
+    protected $keyType = 'int';
 
+    // Aktifkan timestamps (karena di migration kamu pakai timestamps)
+    public $timestamps = true;
+
+    // Mass assignment
     protected $fillable = [
-        'nip', 
-        'nama_lengkap', 
+        'nip',
+        'nama_lengkap',
         'jenis_kelamin'
     ];
 
+    // (Optional) casting
+    protected $casts = [
+        'jenis_kelamin' => 'string',
+    ];
+
+    /**
+     * RELASI
+     */
+
+    // Guru punya banyak mata pelajaran
     public function mataPelajaran()
     {
         return $this->hasMany(MataPelajaran::class, 'id_guru');
+    }
+
+    // Guru punya 1 akun user
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id_guru');
     }
 }
