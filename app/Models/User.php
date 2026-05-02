@@ -8,15 +8,19 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    // 1. Definisikan Primary Key kustom kamu
+    // Nama tabel (opsional, tapi aman)
+    protected $table = 'users';
+
+    // Primary key kustom
     protected $primaryKey = 'id_user';
 
-    /**
-     * 2. Daftarkan semua kolom yang boleh diisi (Mass Assignable)
-     */
+    // Karena bukan 'id'
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    // Mass assignment
     protected $fillable = [
         'nama_lengkap',
         'email',
@@ -27,23 +31,40 @@ class User extends Authenticatable
         'is_active',
     ];
 
-    /**
-     * Attributes hidden for serialization.
-     */
+    // Hidden
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     */
+    // Casting
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_active' => 'boolean', // Tambahkan ini agar otomatis jadi true/false
+            'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * RELASI
+     */
+
+    // User milik 1 siswa
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'id_siswa');
+    }
+
+    // User milik 1 guru
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'id_guru');
+    }
+
+    // User punya banyak log aktivitas
+    public function log()
+    {
+        return $this->hasMany(AktivitasLog::class, 'id_user');
     }
 }
