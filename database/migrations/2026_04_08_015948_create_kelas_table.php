@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             // Gunakan id_kelas sebagai primary key sesuai gambar
-            $table->id('id_kelas'); 
+            $table->id('id_kelas');
             $table->string('nama_kelas');
             $table->string('tingkat');
             $table->string('jurusan');
             $table->string('tahun_ajaran');
-            
+
             // Opsional: Tetap gunakan timestamps jika ingin mencatat waktu data dibuat/diubah
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 
