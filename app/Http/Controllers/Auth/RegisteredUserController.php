@@ -3,50 +3,25 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.
+     * Public self-registration is intentionally disabled for this academic system.
      */
     public function create(): View
     {
-        return view('auth.register');
+        abort(404);
     }
 
     /**
-     * Handle an incoming registration request.
+     * Public self-registration is intentionally disabled for this academic system.
      */
     public function store(Request $request): RedirectResponse
     {
-        // 1. Validasi menggunakan 'nama_lengkap'
-        $request->validate([
-            'nama_lengkap' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        // 2. Simpan ke database sesuai struktur tabel SIAKAD kamu
-        $user = User::create([
-            'nama_lengkap' => $request->nama_lengkap,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'siswa', // Default role saat mendaftar mandiri
-            'is_active' => true,
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        abort(404);
     }
 }

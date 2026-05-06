@@ -18,7 +18,7 @@ class SiswaController extends Controller
 {
     public function index(Request $request)
     {
-        $siswa = Siswa::all();
+        $siswa = Siswa::with('kelas')->orderBy('nama_lengkap')->paginate(50);
         AuditTrail::record('Admin melihat daftar siswa', $request);
         return view('admin.siswa.index', compact('siswa'));
     }

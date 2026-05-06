@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
     }
 
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 // --- GRUP ROUTE KHUSUS ADMIN ---
 Route::middleware(['auth', 'role:admin'])->group(function () {

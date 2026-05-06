@@ -18,7 +18,7 @@ class GuruController extends Controller
 {
     public function index(Request $request)
     {
-        $gurus = Guru::all();
+        $gurus = Guru::orderBy('nama_lengkap')->paginate(50);
         AuditTrail::record('Admin melihat daftar guru', $request);
         return view('admin.guru.index', compact('gurus'));
     }
