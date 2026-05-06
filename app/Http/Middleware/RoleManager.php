@@ -13,17 +13,24 @@ class RoleManager
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        // 1. Cek apakah user sudah login
-        if (!auth()->check()) {
+        $user = $request->user();
+
+        if (! $user) {
             return redirect()->route('login');
         }
 
-        // 2. Cek apakah role user di database sama dengan role yang diminta di Route
-        // Misal: di Route minta 'admin', tapi user loginnya 'siswa', maka ditolak.
-        if (auth()->user()->role !== $role) {
-            return redirect()->route('dashboard')->with('error', 'Akses Ditolak!');
+        if (! $user->is_active) {
+            auth()->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            abort(403, 'Akun Anda tidak aktif. Silakan hubungi administrator.');
+        }
+
+        if ($user->role !== $role) {
+            abort(403, 'Akses ditolak. Role Anda tidak berhak membuka halaman ini.');
         }
 
         return $next($request);

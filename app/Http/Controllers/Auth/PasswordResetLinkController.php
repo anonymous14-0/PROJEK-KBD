@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -36,6 +37,13 @@ class PasswordResetLinkController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
+
+        Log::info('Permintaan reset password', [
+            'email' => $request->input('email'),
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'status' => $status,
+        ]);
 
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
