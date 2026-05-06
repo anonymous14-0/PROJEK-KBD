@@ -24,7 +24,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl">
                         
                         <!-- Card Manajemen Akademik (Warna Kuning Pucat) -->
-                        <a href="{{ route('admin.guru.index') }}" class="group block p-10 bg-[#fffdf0] rounded-[2rem] transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-start text-left">
+                        <a href="{{ route('guru.nilai.index') }}" class="group block p-10 bg-[#fffdf0] rounded-[2rem] transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-start text-left">
                             <div class="text-[#d4d957] font-black text-sm uppercase tracking-widest mb-3">Manajemen Akademik</div>
                             <div class="text-4xl font-black text-gray-950 mb-2 leading-none">Input & Edit Nilai</div>
                             <p class="text-[11px] text-gray-400 font-medium max-w-[250px]">Semua informasi tentang manajemen akademik ada disini!</p>
@@ -32,7 +32,7 @@
                         </a>
 
                         <!-- Card Informasi (Warna Biru Pucat) -->
-                        <a href="{{ route('admin.siswa.index') }}" class="group block p-10 bg-[#eef3ff] rounded-[2rem] transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-start text-left">
+                        <a href="{{ route('guru.nilai.index') }}" class="group block p-10 bg-[#eef3ff] rounded-[2rem] transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col items-start text-left">
                             <div class="text-[#8e9eff] font-black text-sm uppercase tracking-widest mb-3">Informasi</div>
                             <div class="text-4xl font-black text-gray-950 mb-2 leading-none">Jadwal Mengajar</div>
                             <p class="text-[11px] text-gray-400 font-medium max-w-[250px]">Semua informasi terkait jadwal mata pelajaran tersedia disini!</p>

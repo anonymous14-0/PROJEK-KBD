@@ -53,9 +53,7 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
         return view('guru.dashboard');
     })->name('guru.dashboard');
 
-    // Tambahkan ini: Hanya index, edit, dan update
     Route::resource('/guru/nilai', App\Http\Controllers\Guru\NilaiController::class)
-        ->only(['index', 'edit', 'update'])
         ->names('guru.nilai');
 });
 

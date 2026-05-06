@@ -6,18 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\AuditTrail;
 use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $siswa = Siswa::all();
+        AuditTrail::record('Admin melihat daftar siswa', $request);
         return view('admin.siswa.index', compact('siswa'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        AuditTrail::record('Admin membuka form tambah siswa', $request);
+
         // Ambil data kelas untuk pilihan di Dropdown Form
         $kelas = DB::table('kelas')->get();
         return view('admin.siswa.create', compact('kelas'));
@@ -34,24 +38,28 @@ class SiswaController extends Controller
 
         DB::beginTransaction();
         try {
-            // 1. Buat Akun User untuk Siswa
-            User::create([
-                'nama_lengkap' => $request->nama_lengkap,
-                'email' => $request->nis . '@siakad.com', // Email otomatis dari NIS
-                'password' => bcrypt('password123'),
-                'role' => 'siswa',
-                'is_active' => true,
-            ]);
-
-            // 2. Simpan Data ke Tabel Siswa
-            Siswa::create([
+            // 1. Simpan Data ke Tabel Siswa
+            $siswa = Siswa::create([
                 'nis' => $request->nis,
                 'nama_lengkap' => $request->nama_lengkap,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'id_kelas' => $request->id_kelas,
             ]);
 
+            // 2. Buat Akun User untuk Siswa dan tautkan ke profil siswa
+            User::create([
+                'nama_lengkap' => $request->nama_lengkap,
+                'email' => $request->nis . '@siakad.com', // Email otomatis dari NIS
+                'password' => bcrypt('password123'),
+                'role' => 'siswa',
+                'id_siswa' => $siswa->id_siswa,
+                'is_active' => true,
+            ]);
+
             DB::commit();
+
+            AuditTrail::record("Admin menambahkan siswa ID {$siswa->id_siswa}", $request);
+
             return redirect()->route('admin.siswa.index')->with('success', 'Data Siswa & Akun Berhasil Dibuat!');
         } catch (\Exception $e) {
             DB::rollBack();

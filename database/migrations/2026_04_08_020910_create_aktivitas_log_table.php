@@ -21,14 +21,14 @@ return new class extends Migration
             $table->foreign('id_user')
                   ->references('id_user')
                   ->on('users')
-                  ->onDelete('cascade');
+                  ->restrictOnDelete();
 
             // Aktivitas yang dilakukan user
             $table->text('aktivitas');
 
             // Optional tambahan (biar lebih informatif)
-            $table->string('ip_address')->nullable();
-            $table->string('user_agent')->nullable();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
 
             // Index (biar cepat saat filter log per user)
             $table->index('id_user');
