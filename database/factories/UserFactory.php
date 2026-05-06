@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'id_guru' => null,
 
             'is_active' => true,
+            'must_change_password' => false,
 
             'remember_token' => Str::random(10),
 

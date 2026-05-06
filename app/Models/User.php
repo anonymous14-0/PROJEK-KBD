@@ -29,6 +29,7 @@ class User extends Authenticatable
         'id_siswa',
         'id_guru',
         'is_active',
+        'must_change_password',
     ];
 
     // Hidden
@@ -43,6 +44,7 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'must_change_password' => 'boolean',
         ];
     }
 
