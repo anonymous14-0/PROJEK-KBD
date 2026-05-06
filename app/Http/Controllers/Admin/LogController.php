@@ -14,7 +14,7 @@ class LogController extends Controller
         AuditTrail::record('Admin melihat log aktivitas', $request);
 
         // Mengambil log terbaru dan memuat data user yang bersangkutan
-        $logs = AktivitasLog::with('user')->orderBy('created_at', 'desc')->paginate(50);
+        $logs = AktivitasLog::with('user')->orderBy('created_at', 'desc')->get();
         return view('admin.audit.index', compact('logs'));
     }
 }
