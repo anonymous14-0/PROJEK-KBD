@@ -14,7 +14,7 @@ class AuditController extends Controller
         AuditTrail::record('Petugas audit melihat log aktivitas', $request);
 
         // Mengambil semua log, diurutkan dari yang terbaru
-        $logs = AktivitasLog::with('user')->latest()->get();
+        $logs = AktivitasLog::with('user')->latest()->paginate(50);
 
         return view('audit.dashboard', compact('logs'));
     }

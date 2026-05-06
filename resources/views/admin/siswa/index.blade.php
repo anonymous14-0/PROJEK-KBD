@@ -13,6 +13,17 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+
+                @if(session('success'))
+                    <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if(session('account_email'))
+                    <div class="mb-4 p-4 bg-blue-100 text-blue-800 rounded-lg">
+                        Akun untuk <span class="font-mono">{{ session('account_email') }}</span> sudah dibuat. Minta user membuka email atau memakai fitur lupa password untuk mengatur password.
+                    </div>
+                @endif
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
@@ -47,6 +58,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="mt-6">
+                    {{ $siswa->links() }}
+                </div>
             </div>
         </div>
     </div>

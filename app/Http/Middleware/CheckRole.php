@@ -13,8 +13,22 @@ class CheckRole
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
+        $user = $request->user();
+
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        if (! $user->is_active) {
+            abort(403, 'Akun Anda tidak aktif.');
+        }
+
+        if ($roles !== [] && ! in_array($user->role, $roles, true)) {
+            abort(403, 'Akses ditolak.');
+        }
+
         return $next($request);
     }
 }

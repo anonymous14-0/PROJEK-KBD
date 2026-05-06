@@ -11,6 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->web(append: [
+            \App\Http\Middleware\SecurityHeaders::class,
+            \App\Http\Middleware\EnsurePasswordHasBeenChanged::class,
+        ]);
+
         // Memberitahu Laravel bahwa 'role' merujuk ke file RoleManager kita
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleManager::class,

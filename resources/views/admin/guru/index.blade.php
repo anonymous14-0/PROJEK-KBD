@@ -21,6 +21,11 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                @if(session('account_email'))
+                    <div class="mb-4 p-4 bg-blue-100 text-blue-800 rounded-lg">
+                        Akun untuk <span class="font-mono">{{ session('account_email') }}</span> sudah dibuat. Minta user membuka email atau memakai fitur lupa password untuk mengatur password.
+                    </div>
+                @endif
 
                 <table class="w-full border-collapse border border-gray-200">
                     <thead class="bg-gray-100">
@@ -51,6 +56,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="mt-6">
+                    {{ $gurus->links() }}
+                </div>
 
             </div>
         </div>

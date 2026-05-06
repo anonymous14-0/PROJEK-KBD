@@ -9,6 +9,7 @@ use App\Models\Siswa;
 use App\Models\MataPelajaran;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,41 +21,46 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => 'Bagas Agung Krisnawan',
             'email' => 'bagaskemiren@gmail.com',
-            'password' => Hash::make('bagaskemiren@312'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'admin',
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         User::create([
             'nama_lengkap' => 'Dimas Jemi Pratama',
             'email' => 'jemicimanggu@gmail.com',
-            'password' => Hash::make('jemicimanggu#321'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'admin',
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         User::create([
             'nama_lengkap' => 'Julian Arya Mukti',
             'email' => 'julianboyolali@gmail.com',
-            'password' => Hash::make('julianboyolali%76'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'admin',
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         User::create([
             'nama_lengkap' => 'Mayfrillia Syaira',
             'email' => 'mayfrilliaprobolinggo@gmail.com',
-            'password' => Hash::make('mayfrilliaprobolinggo^65'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'admin',
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         User::create([
             'nama_lengkap' => 'Nafis Majid Munthassir',
             'email' => 'nafiskebumen@gmail.com',
-            'password' => Hash::make('nafiskebumen*653'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'admin',
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // ========================
@@ -63,9 +69,10 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => 'Petugas Audit',
             'email' => 'audit@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'audit',
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // ========================
@@ -125,10 +132,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru1->nama_lengkap,
             'email' => 'budi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru1->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru2 = Guru::create([
@@ -140,10 +148,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru2->nama_lengkap,
             'email' => 'sania@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru2->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru3 = Guru::create([
@@ -155,10 +164,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru3->nama_lengkap,
             'email' => 'jarot@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru3->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru4 = Guru::create([
@@ -170,10 +180,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru4->nama_lengkap,
             'email' => 'sariman@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru4->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru5 = Guru::create([
@@ -185,10 +196,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru5->nama_lengkap,
             'email' => 'ambar@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru5->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru6 = Guru::create([
@@ -200,10 +212,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru6->nama_lengkap,
             'email' => 'bayu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru6->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru7 = Guru::create([
@@ -215,10 +228,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru7->nama_lengkap,
             'email' => 'safa@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru7->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru8 = Guru::create([
@@ -230,10 +244,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru8->nama_lengkap,
             'email' => 'bagus@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru8->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru9 = Guru::create([
@@ -245,10 +260,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru9->nama_lengkap,
             'email' => 'sadiman@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru9->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $guru10 = Guru::create([
@@ -260,10 +276,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $guru10->nama_lengkap,
             'email' => 'danik@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'guru',
             'id_guru' => $guru10->id_guru, // 🔥 relasi
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
 
@@ -282,10 +299,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa1->nama_lengkap,
             'email' => 'jarwo@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa1->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa2 = Siswa::create([
@@ -298,10 +316,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa2->nama_lengkap,
             'email' => 'joko@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa2->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa3 = Siswa::create([
@@ -314,10 +333,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa3->nama_lengkap,
             'email' => 'kiki@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa3->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa4 = Siswa::create([
@@ -330,10 +350,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa4->nama_lengkap,
             'email' => 'jentod@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa4->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa5 = Siswa::create([
@@ -346,10 +367,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa5->nama_lengkap,
             'email' => 'jimbo@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa5->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa6 = Siswa::create([
@@ -362,10 +384,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa6->nama_lengkap,
             'email' => 'surya@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa6->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa7 = Siswa::create([
@@ -378,10 +401,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa7->nama_lengkap,
             'email' => 'celsi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa7->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa8 = Siswa::create([
@@ -394,10 +418,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa8->nama_lengkap,
             'email' => 'ciwa@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa8->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa9 = Siswa::create([
@@ -410,10 +435,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa9->nama_lengkap,
             'email' => 'diva@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa9->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa10 = Siswa::create([
@@ -426,10 +452,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa10->nama_lengkap,
             'email' => 'Dania@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa10->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa11 = Siswa::create([
@@ -442,10 +469,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa11->nama_lengkap,
             'email' => 'agus@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa11->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa12 = Siswa::create([
@@ -458,10 +486,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa12->nama_lengkap,
             'email' => 'agung@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa12->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 13
@@ -475,10 +504,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa13->nama_lengkap,
             'email' => 'andika@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa13->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 14
@@ -492,10 +522,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa14->nama_lengkap,
             'email' => 'andi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa14->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 15
@@ -509,10 +540,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa15->nama_lengkap,
             'email' => 'anton@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa15->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 16
@@ -526,10 +558,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa16->nama_lengkap,
             'email' => 'ari@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa16->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 17
@@ -543,10 +576,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa17->nama_lengkap,
             'email' => 'aris@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa17->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 18
@@ -560,10 +594,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa18->nama_lengkap,
             'email' => 'arif@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa18->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 19
@@ -577,10 +612,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa19->nama_lengkap,
             'email' => 'arya@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa19->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 20
@@ -594,10 +630,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa20->nama_lengkap,
             'email' => 'bagas@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa20->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 21
@@ -611,10 +648,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa21->nama_lengkap,
             'email' => 'bambang@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa21->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 22
@@ -628,10 +666,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa22->nama_lengkap,
             'email' => 'yusril@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa22->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 23
@@ -645,10 +684,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa23->nama_lengkap,
             'email' => 'beni@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa23->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 24
@@ -662,10 +702,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa24->nama_lengkap,
             'email' => 'bima@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa24->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 25
@@ -679,10 +720,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa25->nama_lengkap,
             'email' => 'baser@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa25->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 26
@@ -696,10 +738,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa26->nama_lengkap,
             'email' => 'cahyo@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa26->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 27
@@ -713,10 +756,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa27->nama_lengkap,
             'email' => 'dedi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa27->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 28
@@ -730,10 +774,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa28->nama_lengkap,
             'email' => 'dediansyah@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa28->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 29
@@ -747,10 +792,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa29->nama_lengkap,
             'email' => 'deni@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa29->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 30
@@ -764,10 +810,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa30->nama_lengkap,
             'email' => 'dimas@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa30->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa Kelas 10 IPS 1
@@ -781,10 +828,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa2->nama_lengkap,
             'email' => 'ahmad@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa11->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa32 = Siswa::create([
@@ -797,10 +845,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa32->nama_lengkap,
             'email' => 'garnis@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa32->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa33 = Siswa::create([
@@ -813,10 +862,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa33->nama_lengkap,
             'email' => 'doni@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa33->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa34 = Siswa::create([
@@ -829,10 +879,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa34->nama_lengkap,
             'email' => 'sofa@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa34->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 6
@@ -846,10 +897,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa35->nama_lengkap,
             'email' => 'samala@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa35->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa36 = Siswa::create([
@@ -862,10 +914,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa36->nama_lengkap,
             'email' => 'anita@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa36->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa37 = Siswa::create([
@@ -878,10 +931,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa37->nama_lengkap,
             'email' => 'rantu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa37->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
          $siswa38 = Siswa::create([
@@ -894,10 +948,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa38->nama_lengkap,
             'email' => 'serli@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa38->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa39 = Siswa::create([
@@ -910,10 +965,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa39->nama_lengkap,
             'email' => 'suryanti@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa39->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa40 = Siswa::create([
@@ -926,10 +982,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa40->nama_lengkap,
             'email' => 'sawo@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa40->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 41
@@ -943,10 +1000,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa41->nama_lengkap,
             'email' => 'eko@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa41->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 42
@@ -960,10 +1018,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa42->nama_lengkap,
             'email' => 'ekoan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa42->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 43
@@ -977,10 +1036,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa43->nama_lengkap,
             'email' => 'erwin@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa43->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 44
@@ -994,10 +1054,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa44->nama_lengkap,
             'email' => 'fajar@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa44->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 45
@@ -1011,10 +1072,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa45->nama_lengkap,
             'email' => 'fahmi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa45->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 46
@@ -1028,10 +1090,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa46->nama_lengkap,
             'email' => 'farhan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa46->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 47
@@ -1045,10 +1108,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa47->nama_lengkap,
             'email' => 'ferdi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa47->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 48
@@ -1062,10 +1126,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa48->nama_lengkap,
             'email' => 'firmansyah@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa48->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 49
@@ -1079,10 +1144,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa49->nama_lengkap,
             'email' => 'fikri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa49->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 50
@@ -1096,10 +1162,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa50->nama_lengkap,
             'email' => 'galih@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa50->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 51
@@ -1113,10 +1180,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa51->nama_lengkap,
             'email' => 'gilang@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa51->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 52
@@ -1130,10 +1198,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa52->nama_lengkap,
             'email' => 'gunawan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa52->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 53
@@ -1147,10 +1216,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa53->nama_lengkap,
             'email' => 'hadi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa53->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 54
@@ -1164,10 +1234,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa54->nama_lengkap,
             'email' => 'haikal@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa54->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 55
@@ -1181,10 +1252,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa55->nama_lengkap,
             'email' => 'hamdan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa55->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 56
@@ -1198,10 +1270,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa56->nama_lengkap,
             'email' => 'hendra@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa56->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 57
@@ -1215,10 +1288,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa57->nama_lengkap,
             'email' => 'heri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa57->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 58
@@ -1232,10 +1306,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa58->nama_lengkap,
             'email' => 'hilmi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa58->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 59
@@ -1249,10 +1324,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa59->nama_lengkap,
             'email' => 'ibnu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa59->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 60
@@ -1266,10 +1342,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa60->nama_lengkap,
             'email' => 'ihsan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa60->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
 
@@ -1284,10 +1361,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa61->nama_lengkap,
             'email' => 'teri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa61->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa62 = Siswa::create([
@@ -1300,10 +1378,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa62->nama_lengkap,
             'email' => 'teddy@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa62->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa63 = Siswa::create([
@@ -1316,10 +1395,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa63->nama_lengkap,
             'email' => 'reni@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa63->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa64 = Siswa::create([
@@ -1332,10 +1412,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa64->nama_lengkap,
             'email' => 'welly@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa64->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa65 = Siswa::create([
@@ -1348,10 +1429,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa65->nama_lengkap,
             'email' => 'yopi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa65->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa66 = Siswa::create([
@@ -1364,10 +1446,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa66->nama_lengkap,
             'email' => 'yosu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa66->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         $siswa67 = Siswa::create([
@@ -1380,10 +1463,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa67->nama_lengkap,
             'email' => 'qinta@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa67->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 68
@@ -1397,10 +1481,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa68->nama_lengkap,
             'email' => 'ilham@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa68->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 69
@@ -1414,10 +1499,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa69->nama_lengkap,
             'email' => 'indra@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa69->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 70
@@ -1431,10 +1517,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa70->nama_lengkap,
             'email' => 'irfan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa70->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 71
@@ -1448,10 +1535,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa71->nama_lengkap,
             'email' => 'iskandar@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa71->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 72
@@ -1465,10 +1553,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa72->nama_lengkap,
             'email' => 'ivan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa72->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 73
@@ -1482,10 +1571,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa73->nama_lengkap,
             'email' => 'jefri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa73->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 74
@@ -1499,10 +1589,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa74->nama_lengkap,
             'email' => 'johan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa74->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 75
@@ -1516,10 +1607,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa75->nama_lengkap,
             'email' => 'joni@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa75->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 76
@@ -1533,10 +1625,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa76->nama_lengkap,
             'email' => 'julian@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa76->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 77
@@ -1550,10 +1643,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa77->nama_lengkap,
             'email' => 'juned@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa77->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 78
@@ -1567,10 +1661,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa78->nama_lengkap,
             'email' => 'kurnia@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa78->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 79
@@ -1584,10 +1679,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa79->nama_lengkap,
             'email' => 'luthfi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa79->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 80
@@ -1601,10 +1697,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa80->nama_lengkap,
             'email' => 'maulana@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa80->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 81
@@ -1618,10 +1715,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa81->nama_lengkap,
             'email' => 'maman@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa81->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 82
@@ -1635,10 +1733,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa82->nama_lengkap,
             'email' => 'mario@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa82->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 83
@@ -1652,10 +1751,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa83->nama_lengkap,
             'email' => 'miftah@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa83->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 84
@@ -1669,10 +1769,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa84->nama_lengkap,
             'email' => 'miko@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa84->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 85
@@ -1686,10 +1787,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa85->nama_lengkap,
             'email' => 'muhammad@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa85->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 86
@@ -1703,10 +1805,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa86->nama_lengkap,
             'email' => 'nanda@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa86->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 87
@@ -1720,10 +1823,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa87->nama_lengkap,
             'email' => 'naufal@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa87->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 88
@@ -1737,10 +1841,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa88->nama_lengkap,
             'email' => 'niko@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa88->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 89
@@ -1754,10 +1859,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa89->nama_lengkap,
             'email' => 'noval@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa89->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 90
@@ -1771,10 +1877,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa90->nama_lengkap,
             'email' => 'opan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa90->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa Kelas 11 MIPS 2
@@ -1789,10 +1896,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa91->nama_lengkap,
             'email' => 'opik@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa91->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 92
@@ -1806,10 +1914,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa92->nama_lengkap,
             'email' => 'pandu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa92->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 93
@@ -1823,10 +1932,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa93->nama_lengkap,
             'email' => 'prasetyo@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa93->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 94
@@ -1840,10 +1950,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa94->nama_lengkap,
             'email' => 'putra@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa94->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 95
@@ -1857,10 +1968,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa95->nama_lengkap,
             'email' => 'rahmat@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa95->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 96
@@ -1874,10 +1986,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa96->nama_lengkap,
             'email' => 'rama@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa96->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 97
@@ -1891,10 +2004,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa97->nama_lengkap,
             'email' => 'rangga@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa97->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 98
@@ -1908,10 +2022,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa98->nama_lengkap,
             'email' => 'rendi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa98->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 99
@@ -1925,10 +2040,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa99->nama_lengkap,
             'email' => 'rian@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa99->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 100
@@ -1942,10 +2058,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa100->nama_lengkap,
             'email' => 'ridho@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa100->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 101
@@ -1959,10 +2076,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa101->nama_lengkap,
             'email' => 'rifki@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa101->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 102
@@ -1976,10 +2094,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa102->nama_lengkap,
             'email' => 'rizal@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa102->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 103
@@ -1993,10 +2112,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa103->nama_lengkap,
             'email' => 'robin@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa103->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 104
@@ -2010,10 +2130,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa104->nama_lengkap,
             'email' => 'robi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa104->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 105
@@ -2027,10 +2148,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa105->nama_lengkap,
             'email' => 'roy@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa105->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 106
@@ -2044,10 +2166,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa106->nama_lengkap,
             'email' => 'sandi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa106->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 107
@@ -2061,10 +2184,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa107->nama_lengkap,
             'email' => 'saputra@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa107->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 108
@@ -2078,10 +2202,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa108->nama_lengkap,
             'email' => 'setiawan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa108->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 109
@@ -2095,10 +2220,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa109->nama_lengkap,
             'email' => 'sholeh@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa109->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 110
@@ -2112,10 +2238,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa110->nama_lengkap,
             'email' => 'sidik@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa110->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 111
@@ -2129,10 +2256,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa111->nama_lengkap,
             'email' => 'sigit@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa111->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 112
@@ -2146,10 +2274,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa112->nama_lengkap,
             'email' => 'slamet@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa112->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 113
@@ -2163,10 +2292,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa113->nama_lengkap,
             'email' => 'sony@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa113->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 114
@@ -2180,10 +2310,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa114->nama_lengkap,
             'email' => 'subhan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa114->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 115
@@ -2197,10 +2328,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa115->nama_lengkap,
             'email' => 'sukma@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa115->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 116
@@ -2214,10 +2346,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa116->nama_lengkap,
             'email' => 'sultan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa116->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 117
@@ -2231,10 +2364,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa117->nama_lengkap,
             'email' => 'susanto@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa117->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 118
@@ -2248,10 +2382,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa118->nama_lengkap,
             'email' => 'syahrul@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa118->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 119
@@ -2265,10 +2400,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa119->nama_lengkap,
             'email' => 'taufik@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa119->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 120
@@ -2282,10 +2418,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa120->nama_lengkap,
             'email' => 'teguh@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa120->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
         // Siswa Kelas 12 MIPA 3
         // Siswa 121
@@ -2299,10 +2436,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa121->nama_lengkap,
             'email' => 'tono@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa121->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 122
@@ -2316,10 +2454,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa122->nama_lengkap,
             'email' => 'ucrit@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa122->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 123
@@ -2333,10 +2472,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa123->nama_lengkap,
             'email' => 'udin@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa123->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 124
@@ -2350,10 +2490,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa124->nama_lengkap,
             'email' => 'umar@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa124->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 125
@@ -2367,10 +2508,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa125->nama_lengkap,
             'email' => 'usman@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa125->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 126
@@ -2384,10 +2526,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa126->nama_lengkap,
             'email' => 'wahyu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa126->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 127
@@ -2401,10 +2544,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa127->nama_lengkap,
             'email' => 'wawan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa127->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 128
@@ -2418,10 +2562,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa128->nama_lengkap,
             'email' => 'widodo@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa128->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 129
@@ -2435,10 +2580,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa129->nama_lengkap,
             'email' => 'yanto@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa129->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 130
@@ -2452,10 +2598,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa130->nama_lengkap,
             'email' => 'yayan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa130->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 131
@@ -2469,10 +2616,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa131->nama_lengkap,
             'email' => 'yoga@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa131->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 132
@@ -2486,10 +2634,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa132->nama_lengkap,
             'email' => 'yudi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa132->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 133
@@ -2503,10 +2652,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa133->nama_lengkap,
             'email' => 'yusuf@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa133->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 134
@@ -2520,10 +2670,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa134->nama_lengkap,
             'email' => 'zaki@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa134->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 135
@@ -2537,10 +2688,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa135->nama_lengkap,
             'email' => 'zulfan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa135->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 136
@@ -2554,10 +2706,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa136->nama_lengkap,
             'email' => 'zulham@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa136->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 137
@@ -2571,10 +2724,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa137->nama_lengkap,
             'email' => 'zulkarnaen@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa137->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 138
@@ -2588,10 +2742,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa138->nama_lengkap,
             'email' => 'amel@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa138->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 139
@@ -2605,10 +2760,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa139->nama_lengkap,
             'email' => 'amelia@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa139->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 140
@@ -2622,10 +2778,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa140->nama_lengkap,
             'email' => 'ayu@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa140->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 141
@@ -2639,10 +2796,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa141->nama_lengkap,
             'email' => 'bella@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa141->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 142
@@ -2656,10 +2814,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa142->nama_lengkap,
             'email' => 'bunga@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa142->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 143
@@ -2673,10 +2832,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa143->nama_lengkap,
             'email' => 'citra@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa143->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 144
@@ -2690,10 +2850,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa144->nama_lengkap,
             'email' => 'dela@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa144->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 145
@@ -2707,10 +2868,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa145->nama_lengkap,
             'email' => 'desi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa145->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 146
@@ -2724,10 +2886,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa146->nama_lengkap,
             'email' => 'dewi@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa146->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 147
@@ -2741,10 +2904,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa147->nama_lengkap,
             'email' => 'dina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa147->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 148
@@ -2758,10 +2922,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa148->nama_lengkap,
             'email' => 'eka@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa148->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 149
@@ -2775,10 +2940,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa149->nama_lengkap,
             'email' => 'elsa@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa149->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 150
@@ -2792,10 +2958,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa150->nama_lengkap,
             'email' => 'fitri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa150->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa Kelas 12 MIPS 3
@@ -2811,10 +2978,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa151->nama_lengkap,
             'email' => 'gina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa151->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 152
@@ -2828,10 +2996,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa152->nama_lengkap,
             'email' => 'hani@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa152->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 153
@@ -2845,10 +3014,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa153->nama_lengkap,
             'email' => 'icha@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa153->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 154
@@ -2862,10 +3032,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa154->nama_lengkap,
             'email' => 'indah@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa154->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 155
@@ -2879,10 +3050,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa155->nama_lengkap,
             'email' => 'intan@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa155->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 156
@@ -2896,10 +3068,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa156->nama_lengkap,
             'email' => 'kartika@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa156->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 157
@@ -2913,10 +3086,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa157->nama_lengkap,
             'email' => 'lina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa157->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 158
@@ -2930,10 +3104,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa158->nama_lengkap,
             'email' => 'lisa@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa158->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 159
@@ -2947,10 +3122,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa159->nama_lengkap,
             'email' => 'maria@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa159->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 160
@@ -2964,10 +3140,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa160->nama_lengkap,
             'email' => 'maya@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa160->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 161
@@ -2981,10 +3158,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa161->nama_lengkap,
             'email' => 'mega@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa161->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 162
@@ -2998,10 +3176,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa162->nama_lengkap,
             'email' => 'mila@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa162->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 163
@@ -3015,10 +3194,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa163->nama_lengkap,
             'email' => 'nina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa163->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 164
@@ -3032,10 +3212,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa164->nama_lengkap,
             'email' => 'nita@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa164->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 165
@@ -3049,10 +3230,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa165->nama_lengkap,
             'email' => 'novia@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa165->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 166
@@ -3066,10 +3248,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa166->nama_lengkap,
             'email' => 'nuri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa166->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 167
@@ -3083,10 +3266,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa167->nama_lengkap,
             'email' => 'okta@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa167->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 168
@@ -3100,10 +3284,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa168->nama_lengkap,
             'email' => 'putri@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa168->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 169
@@ -3117,10 +3302,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa169->nama_lengkap,
             'email' => 'ratna@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa169->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 170
@@ -3134,10 +3320,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa170->nama_lengkap,
             'email' => 'rina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa170->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 171
@@ -3151,10 +3338,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa171->nama_lengkap,
             'email' => 'risa@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa171->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 172
@@ -3168,10 +3356,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa172->nama_lengkap,
             'email' => 'sari@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa172->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 173
@@ -3185,10 +3374,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa173->nama_lengkap,
             'email' => 'sinta@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa173->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 174
@@ -3202,10 +3392,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa174->nama_lengkap,
             'email' => 'tari@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa174->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 175
@@ -3219,10 +3410,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa175->nama_lengkap,
             'email' => 'tika@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa175->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 176
@@ -3236,10 +3428,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa176->nama_lengkap,
             'email' => 'tina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa176->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 177
@@ -3253,10 +3446,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa177->nama_lengkap,
             'email' => 'vani@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa177->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 178
@@ -3270,10 +3464,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa178->nama_lengkap,
             'email' => 'vina@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa178->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 179
@@ -3287,10 +3482,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa179->nama_lengkap,
             'email' => 'winda@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa179->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // Siswa 180
@@ -3304,10 +3500,11 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nama_lengkap' => $siswa180->nama_lengkap,
             'email' => 'yuni@gmail.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make($this->seedPassword()),
             'role' => 'siswa',
             'id_siswa' => $siswa180->id_siswa,
             'is_active' => true,
+            'must_change_password' => true,
         ]);
 
         // ========================
@@ -3383,5 +3580,14 @@ class DatabaseSeeder extends Seeder
             'id_guru' => $guru10->id_guru,
         ]);
 
+    }
+
+    private function seedPassword(): string
+    {
+        if (app()->isLocal()) {
+            return env('SEED_DEFAULT_PASSWORD') ?: Str::password(24);
+        }
+
+        return Str::password(32);
     }
 }
