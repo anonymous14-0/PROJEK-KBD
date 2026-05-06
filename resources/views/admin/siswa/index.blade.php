@@ -19,6 +19,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
+
                 @if(session('temporary_password'))
                     <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
                         <p class="font-semibold">Password sementara untuk {{ session('temporary_account_email') }}:</p>
