@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -47,16 +46,16 @@ class GuruController extends Controller
             ]);
         }
 
-        $initialPassword = Str::password(32);
+        $temporaryPassword = Str::password(16);
 
         try {
-            $guru = DB::transaction(function () use ($validated, $email, $initialPassword) {
+            $guru = DB::transaction(function () use ($validated, $email, $temporaryPassword) {
                 $guru = Guru::create($validated);
 
                 User::create([
                     'nama_lengkap' => $validated['nama_lengkap'],
                     'email' => $email,
-                    'password' => Hash::make($initialPassword),
+                    'password' => Hash::make($temporaryPassword),
                     'role' => 'guru',
                     'id_guru' => $guru->id_guru,
                     'is_active' => true,
@@ -75,19 +74,12 @@ class GuruController extends Controller
             return back()->withInput()->with('error', 'Gagal menyimpan data guru. Silakan coba lagi.');
         }
 
-        $resetStatus = Password::sendResetLink(['email' => $email]);
-
-        Log::info('Link reset password akun baru diproses', [
-            'email' => $email,
-            'status' => $resetStatus,
-            'created_by' => $request->user()?->getKey(),
-        ]);
-
         AuditTrail::record("Admin menambahkan guru ID {$guru->id_guru}", $request);
 
         return redirect()->route('admin.guru.index')->with([
-            'success' => 'Guru & Akun Login berhasil dibuat. Link reset password sudah dikirim bila email dapat menerima notifikasi. User juga dapat memakai fitur lupa password.',
-            'account_email' => $email,
+            'success' => 'Guru & Akun Login berhasil dibuat. Berikan password sementara ini kepada guru dan minta segera diganti.',
+            'temporary_password' => $temporaryPassword,
+            'temporary_account_email' => $email,
         ]);
     }
 }

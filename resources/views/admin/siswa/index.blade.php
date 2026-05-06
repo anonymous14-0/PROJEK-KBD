@@ -19,9 +19,11 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                @if(session('account_email'))
-                    <div class="mb-4 p-4 bg-blue-100 text-blue-800 rounded-lg">
-                        Akun untuk <span class="font-mono">{{ session('account_email') }}</span> sudah dibuat. Minta user membuka email atau memakai fitur lupa password untuk mengatur password.
+                @if(session('temporary_password'))
+                    <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
+                        <p class="font-semibold">Password sementara untuk {{ session('temporary_account_email') }}:</p>
+                        <p class="font-mono text-lg">{{ session('temporary_password') }}</p>
+                        <p class="text-sm mt-1">Password hanya ditampilkan sekali. User wajib menggantinya saat login pertama.</p>
                     </div>
                 @endif
                 <table class="min-w-full divide-y divide-gray-200">

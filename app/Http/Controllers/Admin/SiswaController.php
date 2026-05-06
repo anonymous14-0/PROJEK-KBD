@@ -10,7 +10,6 @@ use App\Services\AuditTrail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -49,16 +48,16 @@ class SiswaController extends Controller
             ]);
         }
 
-        $initialPassword = Str::password(32);
+        $temporaryPassword = Str::password(16);
 
         try {
-            $siswa = DB::transaction(function () use ($validated, $email, $initialPassword) {
+            $siswa = DB::transaction(function () use ($validated, $email, $temporaryPassword) {
                 $siswa = Siswa::create($validated);
 
                 User::create([
                     'nama_lengkap' => $validated['nama_lengkap'],
                     'email' => $email,
-                    'password' => Hash::make($initialPassword),
+                    'password' => Hash::make($temporaryPassword),
                     'role' => 'siswa',
                     'id_siswa' => $siswa->id_siswa,
                     'is_active' => true,
@@ -77,19 +76,12 @@ class SiswaController extends Controller
             return back()->withInput()->with('error', 'Gagal menyimpan data siswa. Silakan coba lagi.');
         }
 
-        $resetStatus = Password::sendResetLink(['email' => $email]);
-
-        Log::info('Link reset password akun baru diproses', [
-            'email' => $email,
-            'status' => $resetStatus,
-            'created_by' => $request->user()?->getKey(),
-        ]);
-
         AuditTrail::record("Admin menambahkan siswa ID {$siswa->id_siswa}", $request);
 
         return redirect()->route('admin.siswa.index')->with([
-            'success' => 'Data Siswa & Akun berhasil dibuat. Link reset password sudah dikirim bila email dapat menerima notifikasi. User juga dapat memakai fitur lupa password.',
-            'account_email' => $email,
+            'success' => 'Data Siswa & Akun berhasil dibuat. Berikan password sementara ini kepada siswa dan minta segera diganti.',
+            'temporary_password' => $temporaryPassword,
+            'temporary_account_email' => $email,
         ]);
     }
 }
