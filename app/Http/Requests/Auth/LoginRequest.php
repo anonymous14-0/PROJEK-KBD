@@ -13,19 +13,11 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -50,7 +42,9 @@ class LoginRequest extends FormRequest
         ];
 
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+
+            // Tambah percobaan gagal + lock 60 detik
+            RateLimiter::hit($this->throttleKey(), 60);
 
             Log::warning('Percobaan login gagal', [
                 'email' => $this->input('email'),
@@ -63,6 +57,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Reset percobaan jika login berhasil
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -73,11 +68,17 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
+        // Maksimal 5 percobaan login gagal
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
         event(new Lockout($this));
+
+        Log::warning('Rate limit login terpicu', [
+            'email' => $this->input('email'),
+            'ip_address' => $this->ip(),
+        ]);
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
@@ -94,6 +95,8 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(
+            Str::lower($this->string('email')) . '|' . $this->ip()
+        );
     }
 }
