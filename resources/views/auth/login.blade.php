@@ -75,6 +75,15 @@
                 <form method="POST" action="{{ route('login') }}" class="w-full max-w-[450px] space-y-4 md:space-y-8">
                     @csrf
 
+                    @if ($errors->has('email'))
+                        <div class="rounded-xl md:rounded-2xl bg-red-600 px-4 md:px-6 py-4 text-center text-white shadow-2xl ring-4 ring-red-300/60" role="alert">
+                            <p class="text-xs md:text-sm font-black uppercase tracking-[0.2em]">Peringatan login</p>
+                            <p class="mt-1 text-lg md:text-2xl font-black italic">
+                                {{ $errors->first('email') }}
+                            </p>
+                        </div>
+                    @endif
+
                     <!-- Input Username -->
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-4 md:pl-5 text-gray-400 border-r-2 border-gray-100 my-3 pr-3 md:pr-4 group-focus-within:text-blue-600 transition-all">
