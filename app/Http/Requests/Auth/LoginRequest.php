@@ -14,6 +14,8 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+    public const SPAM_WARNING_MESSAGE = 'mau ngapain spam cuki';
+
     public function authorize(): bool
     {
         return true;
@@ -56,7 +58,7 @@ class LoginRequest extends FormRequest
             ]);
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => self::SPAM_WARNING_MESSAGE,
             ]);
         }
 
@@ -83,13 +85,8 @@ class LoginRequest extends FormRequest
             'ip_address' => $this->ip(),
         ]);
 
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => self::SPAM_WARNING_MESSAGE,
         ]);
     }
 
