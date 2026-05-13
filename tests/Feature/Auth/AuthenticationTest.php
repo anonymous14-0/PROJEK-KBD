@@ -67,6 +67,38 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_failed_login_for_existing_user_is_recorded_in_activity_log(): void
+    {
+        $user = User::factory()->create();
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'wrong-password',
+        ]);
+
+        $this->assertGuest();
+        $this->assertDatabaseHas('aktivitas_log', [
+            'id_user' => $user->id_user,
+            'aktivitas' => "Percobaan login gagal untuk email {$user->email}",
+        ]);
+    }
+
+    public function test_failed_login_for_unknown_email_is_recorded_in_activity_log(): void
+    {
+        $email = 'unknown@example.test';
+
+        $this->post('/login', [
+            'email' => $email,
+            'password' => 'wrong-password',
+        ]);
+
+        $this->assertGuest();
+        $this->assertDatabaseHas('aktivitas_log', [
+            'id_user' => null,
+            'aktivitas' => "Percobaan login gagal untuk email {$email}",
+        ]);
+    }
+
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();
