@@ -16,12 +16,12 @@ return new class extends Migration
             $table->id('id_log');
 
             // Relasi ke users
-            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_user')->nullable();
 
             $table->foreign('id_user')
                   ->references('id_user')
                   ->on('users')
-                  ->restrictOnDelete();
+                  ->nullOnDelete();
 
             // Aktivitas yang dilakukan user
             $table->text('aktivitas');

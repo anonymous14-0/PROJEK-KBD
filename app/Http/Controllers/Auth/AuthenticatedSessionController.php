@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Services\AuditTrail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -17,6 +16,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        session([
+            'captcha_num1' => rand(1, 10),
+            'captcha_num2' => rand(1, 10),
+        ]);
+
         return view('auth.login');
     }
 
@@ -25,16 +29,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Validasi CAPTCHA
+        if ((int)$request->captcha !==
+            (session('captcha_num1') + session('captcha_num2'))) {
+
+            return back()->withErrors([
+                'captcha' => 'Jawaban captcha salah.'
+            ])->withInput();
+        }
+
+        // Proses login
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        AuditTrail::record('User login berhasil', $request);
-
-        if ($request->user()->must_change_password) {
-            return redirect()->route('profile.edit')
-                ->with('warning', 'Silakan ganti password sementara Anda sebelum melanjutkan.');
-        }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
@@ -44,8 +51,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        AuditTrail::record('User logout', $request);
-
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
