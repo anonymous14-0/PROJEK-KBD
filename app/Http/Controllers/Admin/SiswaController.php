@@ -36,7 +36,7 @@ class SiswaController extends Controller
         $email = $request->input('nis').'@siakad.com';
 
         $validated = $request->validate([
-            'nis' => ['required', 'string', 'max:50', 'unique:siswa,nis'],
+            'nis' => ['required', 'string', 'max:50', 'unique:siswa,nis_hash'],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
             'id_kelas' => ['required', 'integer', 'exists:kelas,id_kelas'],
