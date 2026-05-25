@@ -35,7 +35,7 @@ class GuruController extends Controller
         $email = $request->input('nip').'@siakad.com';
 
         $validated = $request->validate([
-            'nip' => ['required', 'string', 'max:50', 'unique:guru,nip_hash'],
+            'nip' => ['required', 'string', 'max:50', 'unique:guru,nip'],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);

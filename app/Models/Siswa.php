@@ -32,7 +32,6 @@ class Siswa extends Model
 
     // (Optional) casting
     protected $casts = [
-        'nis' => 'encrypted',
         'jenis_kelamin' => 'string',
     ];
 
@@ -57,14 +56,4 @@ class Siswa extends Model
     {
         return $this->hasOne(User::class, 'id_siswa');
     }
-
-    protected static function booted(): void
-    {
-        static::saving(function (Siswa $siswa): void {
-            if ($siswa->nis !== null) {
-                $siswa->nis_hash = hash('sha256', strtolower(trim((string) $siswa->nis)));
-            }
-        });
-    }
 }
-

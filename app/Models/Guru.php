@@ -31,7 +31,6 @@ class Guru extends Model
 
     // (Optional) casting
     protected $casts = [
-        'nip' => 'encrypted',
         'jenis_kelamin' => 'string',
     ];
 
@@ -50,14 +49,4 @@ class Guru extends Model
     {
         return $this->hasOne(User::class, 'id_guru');
     }
-
-    protected static function booted(): void
-    {
-        static::saving(function (Guru $guru): void {
-            if ($guru->nip !== null) {
-                $guru->nip_hash = hash('sha256', strtolower(trim((string) $guru->nip)));
-            }
-        });
-    }
 }
-
