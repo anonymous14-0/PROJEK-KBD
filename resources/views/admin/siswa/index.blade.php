@@ -4,33 +4,23 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Daftar Siswa') }}
             </h2>
-            <a href="{{ route('admin.siswa.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded text-sm transition">
-                + Tambah Siswa
-            </a>
+            <div class="flex gap-2">
+                <a href="{{ route('admin.siswa.trashed') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-sm transition">
+                    Tempat Sampah
+                </a>
+                <a href="{{ route('admin.siswa.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded text-sm transition">
+                    + Tambah Siswa
+                </a>
+            </div>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-
                 @if(session('success'))
                     <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
                         {{ session('success') }}
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                @if(session('temporary_password'))
-                    <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
-                        <p class="font-semibold">Password sementara untuk {{ session('temporary_account_email') }}:</p>
-                        <p class="font-mono text-lg">{{ session('temporary_password') }}</p>
-                        <p class="text-sm mt-1">Password hanya ditampilkan sekali. User wajib menggantinya saat login pertama.</p>
                     </div>
                 @endif
                 <table class="min-w-full divide-y divide-gray-200">
@@ -50,7 +40,6 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $s->nama_lengkap }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $s->jenis_kelamin }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                {{-- Memanggil relasi ke model Kelas --}}
                                 <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">
                                     {{ $s->kelas->nama_kelas ?? 'Tanpa Kelas' }}
                                 </span>
@@ -58,7 +47,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('admin.siswa.edit', $s) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <form action="{{ route('admin.siswa.destroy', $s) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data siswa {{ $s->nama_lengkap }}?')">
+                                    <form action="{{ route('admin.siswa.destroy', $s) }}" method="POST" onsubmit="return confirm('Yakin memindahkan data siswa {{ $s->nama_lengkap }} ke tempat sampah?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
