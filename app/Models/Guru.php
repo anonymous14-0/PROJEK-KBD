@@ -4,49 +4,39 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Guru extends Model
 {
-    use HasFactory;
+    // Mengaktifkan fitur SoftDeletes di dalam Model
+    use HasFactory, SoftDeletes;
 
-    // Nama tabel
+    // Konfigurasi tabel dan primary key
     protected $table = 'guru';
-
-    // Primary key sesuai database
     protected $primaryKey = 'id_guru';
-
-    // Karena custom key
     public $incrementing = true;
     protected $keyType = 'int';
-
-    // Aktifkan timestamps (karena di migration kamu pakai timestamps)
     public $timestamps = true;
 
-    // Mass assignment
-    protected $fillable = [
-        'nip',
-        'nama_lengkap',
-        'jenis_kelamin'
-    ];
+    // Kolom-kolom yang diizinkan untuk diisi secara massal (Mass Assignment)
+    protected $fillable = ['nip', 'nama_lengkap', 'jenis_kelamin'];
 
-    // (Optional) casting
-    protected $casts = [
-        'jenis_kelamin' => 'string',
-    ];
+    // Konversi tipe data otomatis oleh Laravel
+    protected $casts = ['jenis_kelamin' => 'string'];
 
-    // ==========================================
-    // MUTATOR & ACCESSOR UNTUK ENKRIPSI NIP
-    // ==========================================
+    // Mutator: Otomatis mengenkripsi NIP saat data mau disimpan ke database
     public function setNipAttribute($value)
     {
         $this->attributes['nip'] = self::encryptData($value);
     }
 
+    // Accessor: Otomatis mendekripsi NIP saat data dipanggil dari database
     public function getNipAttribute($value)
     {
         return self::decryptData($value);
     }
 
+    // Fungsi Kriptografi: Mengubah teks biasa menjadi sandi (AES-256)
     public static function encryptData($value)
     {
         if (!$value) return $value;
@@ -55,6 +45,7 @@ class Guru extends Model
         return base64_encode(openssl_encrypt($value, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv));
     }
 
+    // Fungsi Kriptografi: Mengubah sandi (ciphertext) kembali menjadi teks asli
     public static function decryptData($value)
     {
         if (!$value) return $value;
@@ -63,17 +54,13 @@ class Guru extends Model
         return openssl_decrypt(base64_decode($value), 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
     }
 
-    /**
-     * RELASI
-     */
-
-    // Guru punya banyak mata pelajaran
+    // Relasi: Satu Guru memiliki banyak Mata Pelajaran
     public function mataPelajaran()
     {
         return $this->hasMany(MataPelajaran::class, 'id_guru');
     }
 
-    // Guru punya 1 akun user
+    // Relasi: Satu Guru hanya memiliki satu Akun Login (User)
     public function user()
     {
         return $this->hasOne(User::class, 'id_guru');

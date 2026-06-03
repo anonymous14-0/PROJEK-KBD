@@ -5,62 +5,51 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    // Menambahkan SoftDeletes untuk manajemen hapus akun
+    use HasFactory, Notifiable, SoftDeletes;
 
-    // Nama tabel (opsional, tapi aman)
+    // Pengaturan Tabel
     protected $table = 'users';
-
-    // Primary key kustom
     protected $primaryKey = 'id_user';
-
-    // Karena bukan 'id'
     public $incrementing = true;
     protected $keyType = 'int';
 
-    // Mass assignment
+    // Kolom-kolom akun
     protected $fillable = [
-        'nama_lengkap',
-        'email',
-        'password',
-        'role',
-        'id_siswa',
-        'id_guru',
-        'is_active',
-        'must_change_password',
+        'nama_lengkap', 'email', 'password', 'role',
+        'id_siswa', 'id_guru', 'is_active', 'must_change_password',
     ];
 
-    // Hidden
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // Kolom ini akan disembunyikan saat data User di-print/dikembalikan bentuk JSON
+    protected $hidden = ['password', 'remember_token'];
 
-    // Casting
+    // Konversi tipe data otomatis (Casting)
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
+            'password' => 'hashed', // Password otomatis ter-hash
             'is_active' => 'boolean',
             'must_change_password' => 'boolean',
         ];
     }
 
-    // ==========================================
-    // MUTATOR & ACCESSOR UNTUK ENKRIPSI EMAIL
-    // ==========================================
+    // Mutator: Enkripsi Email di database
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = self::encryptData($value);
     }
 
+    // Accessor: Dekripsi Email agar bisa dibaca web
     public function getEmailAttribute($value)
     {
         return self::decryptData($value);
     }
 
+    // Fungsi Enkripsi AES-256
     public static function encryptData($value)
     {
         if (!$value) return $value;
@@ -69,6 +58,7 @@ class User extends Authenticatable
         return base64_encode(openssl_encrypt($value, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv));
     }
 
+    // Fungsi Dekripsi AES-256
     public static function decryptData($value)
     {
         if (!$value) return $value;
@@ -77,23 +67,18 @@ class User extends Authenticatable
         return openssl_decrypt(base64_decode($value), 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
     }
 
-    /**
-     * RELASI
-     */
-
-    // User milik 1 siswa
+    // Relasi akun milik siapa
     public function siswa()
     {
         return $this->belongsTo(Siswa::class, 'id_siswa');
     }
 
-    // User milik 1 guru
     public function guru()
     {
         return $this->belongsTo(Guru::class, 'id_guru');
     }
 
-    // User punya banyak log aktivitas
+    // Relasi log aktivitas user
     public function log()
     {
         return $this->hasMany(AktivitasLog::class, 'id_user');
