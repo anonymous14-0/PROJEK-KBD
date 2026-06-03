@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +25,12 @@ class ConfirmablePasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Accessor Model mengembalikan plaintext, jadi kita enkripsi lagi
+        // untuk dicocokkan dengan Auth::guard
+        $encryptedEmail = User::encryptData($request->user()->email);
+
         if (! Auth::guard('web')->validate([
-            'email' => $request->user()->email,
+            'email' => $encryptedEmail,
             'password' => $request->password,
         ])) {
             throw ValidationException::withMessages([

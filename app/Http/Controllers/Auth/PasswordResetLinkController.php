@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -31,15 +32,16 @@ class PasswordResetLinkController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        // Enkripsi email sebelum mengirim ke broker password
+        $encryptedEmail = User::encryptData($request->input('email'));
+
+        // Kirim array dengan email yang terenkripsi
+        $status = Password::sendResetLink([
+            'email' => $encryptedEmail
+        ]);
 
         Log::info('Permintaan reset password', [
-            'email' => $request->input('email'),
+            'email' => $request->input('email'), // Log tetap mencatat plaintext untuk kemudahan debugging
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'status' => $status,
