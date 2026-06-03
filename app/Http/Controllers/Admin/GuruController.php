@@ -34,13 +34,24 @@ class GuruController extends Controller
     {
         $email = $request->input('nip').'@siakad.com';
 
+        // Pengecekan unique bawaan dihapus karena data di DB tersimpan sebagai ciphertext
         $validated = $request->validate([
-            'nip' => ['required', 'string', 'max:50', 'unique:guru,nip'],
+            'nip' => ['required', 'string', 'max:50'],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
         ]);
 
-        if (User::where('email', $email)->exists()) {
+        // Cek Unique Manual untuk NIP (Enkripsi dulu nilainya baru dicek ke DB)
+        $encryptedNip = Guru::encryptData($request->input('nip'));
+        if (Guru::where('nip', $encryptedNip)->exists()) {
+            throw ValidationException::withMessages([
+                'nip' => 'NIP sudah digunakan.',
+            ]);
+        }
+
+        // Cek Unique Manual untuk Email Akun
+        $encryptedEmail = User::encryptData($email);
+        if (User::where('email', $encryptedEmail)->exists()) {
             throw ValidationException::withMessages([
                 'nip' => 'Email akun guru otomatis sudah digunakan.',
             ]);
@@ -54,7 +65,7 @@ class GuruController extends Controller
 
                 User::create([
                     'nama_lengkap' => $validated['nama_lengkap'],
-                    'email' => $email,
+                    'email' => $email, // Akan otomatis dienkripsi oleh model
                     'password' => Hash::make($temporaryPassword),
                     'role' => 'guru',
                     'id_guru' => $guru->id_guru,
@@ -79,7 +90,7 @@ class GuruController extends Controller
         return redirect()->route('admin.guru.index')->with([
             'success' => 'Guru & Akun Login berhasil dibuat. Berikan password sementara ini kepada guru dan minta segera diganti.',
             'temporary_password' => $temporaryPassword,
-            'temporary_account_email' => $email,
+            'temporary_account_email' => $email, // Tampilkan balikan tetap plaintext
         ]);
     }
 }

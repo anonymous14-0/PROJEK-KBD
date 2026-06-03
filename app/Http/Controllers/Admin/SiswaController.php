@@ -35,14 +35,25 @@ class SiswaController extends Controller
     {
         $email = $request->input('nis').'@siakad.com';
 
+        // Pengecekan unique dihapus dari bawaan Laravel
         $validated = $request->validate([
-            'nis' => ['required', 'string', 'max:50', 'unique:siswa,nis'],
+            'nis' => ['required', 'string', 'max:50'],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
             'id_kelas' => ['required', 'integer', 'exists:kelas,id_kelas'],
         ]);
 
-        if (User::where('email', $email)->exists()) {
+        // Cek Unique Manual NIS (Enkripsi dulu nilainya baru dicek ke DB)
+        $encryptedNis = Siswa::encryptData($request->input('nis'));
+        if (Siswa::where('nis', $encryptedNis)->exists()) {
+            throw ValidationException::withMessages([
+                'nis' => 'NIS sudah digunakan.',
+            ]);
+        }
+
+        // Cek Unique Manual Email Akun Siswa
+        $encryptedEmail = User::encryptData($email);
+        if (User::where('email', $encryptedEmail)->exists()) {
             throw ValidationException::withMessages([
                 'nis' => 'Email akun siswa otomatis sudah digunakan.',
             ]);
@@ -56,7 +67,7 @@ class SiswaController extends Controller
 
                 User::create([
                     'nama_lengkap' => $validated['nama_lengkap'],
-                    'email' => $email,
+                    'email' => $email, // Akan otomatis dienkripsi oleh model
                     'password' => Hash::make($temporaryPassword),
                     'role' => 'siswa',
                     'id_siswa' => $siswa->id_siswa,
@@ -81,7 +92,7 @@ class SiswaController extends Controller
         return redirect()->route('admin.siswa.index')->with([
             'success' => 'Data Siswa & Akun berhasil dibuat. Berikan password sementara ini kepada siswa dan minta segera diganti.',
             'temporary_password' => $temporaryPassword,
-            'temporary_account_email' => $email,
+            'temporary_account_email' => $email, // Tampilkan balikan tetap plaintext
         ]);
     }
 }
