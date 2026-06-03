@@ -35,6 +35,35 @@ class Siswa extends Model
         'jenis_kelamin' => 'string',
     ];
 
+    // ==========================================
+    // MUTATOR & ACCESSOR UNTUK ENKRIPSI NIS
+    // ==========================================
+    public function setNisAttribute($value)
+    {
+        $this->attributes['nis'] = self::encryptData($value);
+    }
+
+    public function getNisAttribute($value)
+    {
+        return self::decryptData($value);
+    }
+
+    public static function encryptData($value)
+    {
+        if (!$value) return $value;
+        $key = hash('sha256', env('APP_KEY', 'siakad_secret_key_aes256'), true);
+        $iv = substr(hash('sha256', 'siakad_deterministic_iv'), 0, 16);
+        return base64_encode(openssl_encrypt($value, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv));
+    }
+
+    public static function decryptData($value)
+    {
+        if (!$value) return $value;
+        $key = hash('sha256', env('APP_KEY', 'siakad_secret_key_aes256'), true);
+        $iv = substr(hash('sha256', 'siakad_deterministic_iv'), 0, 16);
+        return openssl_decrypt(base64_decode($value), 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+    }
+
     /**
      * RELASI
      */
