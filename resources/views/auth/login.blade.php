@@ -7,149 +7,129 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased font-sans">
-    <!-- Menggunakan min-h-screen agar background penuh -->
-    <div class="min-h-screen flex items-center justify-center bg-[#345c8c] p-4 sm:p-6 md:p-10">
+    <div class="min-h-screen flex items-center justify-center bg-[#345c8c] p-4 sm:p-6 md:p-8">
 
-        <!-- Container Utama -->
-        <div class="flex flex-col md:flex-row w-full max-w-[1280px] min-h-fit md:min-h-[700px] bg-white rounded-[2rem] md:rounded-[5rem] overflow-hidden shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] transition-all">
+        <div class="flex flex-col md:flex-row w-full max-w-4xl min-h-fit md:min-h-[520px] bg-white rounded-[2rem] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] transition-all">
 
-            <!-- SISI KIRI -->
-            <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-8 md:p-20 text-center">
+            <div class="w-full md:w-1/2 bg-white flex flex-col items-center justify-between p-6 md:p-10 text-center">
 
-                <!-- Logo -->
-                <div class="w-32 h-32 md:w-56 md:h-56 rounded-full border-[4px] md:border-[6px] border-[#1e4066] overflow-hidden mb-6 md:mb-8 shadow-2xl bg-gray-50">
-                    <img src="{{ asset('images/LogosekolahK.jpeg') }}"
-                         alt="Logo Sekolah"
-                         class="w-full h-full object-cover scale-110"
-                         onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=LOGO+MISSING&background=1e4066&color=fff';">
-                </div>
+                <div class="flex flex-col items-center justify-center flex-grow">
+                    <div class="w-24 h-24 md:w-36 md:h-36 rounded-full border-[4px] border-[#1e4066] overflow-hidden mb-4 shadow-xl bg-gray-50">
+                        <img src="{{ asset('images/LogosekolahK.jpeg') }}"
+                             alt="Logo Sekolah"
+                             class="w-full h-full object-cover scale-110"
+                             onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=LOGO+MISSING&background=1e4066&color=fff';">
+                    </div>
 
-                <div class="w-32 md:w-48 h-[5px] bg-black mb-6 md:mb-10 rounded-full"></div>
+                    <div class="w-24 md:w-32 h-[4px] bg-black mb-4 rounded-full"></div>
 
-                <!-- Judul -->
-                <h1 class="text-2xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase leading-tight md:leading-none">
-                    SISTEM INFORMASI<br>AKADEMIK
-                </h1>
+                    <h1 class="text-xl md:text-3xl font-black text-gray-900 tracking-tighter uppercase leading-tight">
+                        SISTEM INFORMASI<br>AKADEMIK
+                    </h1>
 
-                <p class="text-[10px] md:text-lg font-black text-gray-400 mt-2 md:mt-4 mb-6 md:mb-12 tracking-[0.2em] md:tracking-[0.4em] uppercase">
-                    SMA NEGERI 1 KEMIREN
-                </p>
-
-                <div class="text-xs md:text-lg text-gray-600 leading-relaxed max-w-[500px] font-medium italic">
-                    <p>
-                        "Platform digital untuk mengelola aktivitas akademik, data siswa, jadwal, dan nilai secara terintegrasi, cepat, dan efisien."
+                    <p class="text-[9px] md:text-xs font-black text-gray-400 mt-1 mb-4 tracking-[0.2em] md:tracking-[0.3em] uppercase">
+                        SMA NEGERI 1 KEMIREN
                     </p>
+
+                    <div class="text-[11px] md:text-sm text-gray-600 leading-relaxed max-w-[360px] font-medium italic">
+                        <p>
+                            "Platform digital untuk mengelola aktivitas akademik, data siswa, jadwal, dan nilai secara terintegrasi, cepat, dan efisien."
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Footer -->
-                <div class="mt-8 md:mt-auto w-full pt-6 md:pt-10 flex flex-col sm:flex-row justify-between items-center md:items-end border-t border-gray-100 gap-4">
-                    <div class="text-center md:text-left space-y-1">
-                        <p class="text-[10px] md:text-sm text-blue-500 font-black italic">
+                <div class="mt-6 w-full pt-4 flex flex-col sm:flex-row justify-between items-center md:items-end border-t border-gray-100 gap-2">
+                    <div class="text-center md:text-left space-y-0.5">
+                        <p class="text-[9px] md:text-xs text-blue-500 font-black italic">
                             Email: admin@sman1kemiren.sch.id
                         </p>
-
-                        <p class="text-[10px] md:text-sm text-blue-500 font-black italic">
+                        <p class="text-[9px] md:text-xs text-blue-500 font-black italic">
                             Website: www.sman1kemiren.sch.id
                         </p>
                     </div>
-
-                    <p class="text-[10px] md:text-xs text-gray-300 font-bold uppercase">
+                    <p class="text-[9px] md:text-[10px] text-gray-300 font-bold uppercase">
                         © 2024 SMAN 1 KEMIREN
                     </p>
                 </div>
             </div>
 
-            <!-- SISI KANAN -->
-            <div class="w-full md:w-1/2 bg-[#eab308] flex flex-col items-center justify-center p-8 md:p-20 shadow-[inset_0_20px_40px_rgba(0,0,0,0.1)] md:shadow-[inset_20px_0_40px_rgba(0,0,0,0.1)]">
+            <div class="w-full md:w-1/2 bg-[#eab308] flex flex-col items-center justify-center p-6 md:p-10 shadow-[inset_0_20px_40px_rgba(0,0,0,0.1)] md:shadow-[inset_20px_0_40px_rgba(0,0,0,0.1)]">
 
-                <div class="text-center mb-8 md:mb-16">
-                    <h2 class="text-white text-2xl sm:text-3xl md:text-[50px] font-serif font-black tracking-[-0.02em] md:tracking-[-0.05em] uppercase leading-none drop-shadow-2xl">
+                <div class="text-center mb-6 md:mb-8">
+                    <h2 class="text-white text-xl sm:text-2xl md:text-3xl font-serif font-black tracking-tight uppercase leading-none drop-shadow-2xl">
                         SELAMAT DATANG
                     </h2>
-
-                    <p class="text-white text-xs md:text-lg font-black tracking-[0.3em] md:tracking-[0.5em] mt-2 md:mt-4 uppercase opacity-90">
+                    <p class="text-white text-[10px] md:text-xs font-black tracking-[0.2em] md:tracking-[0.3em] mt-1.5 uppercase opacity-90">
                         DI HALAMAN LOGIN
                     </p>
                 </div>
 
-                <form method="POST" action="{{ route('login') }}" class="w-full max-w-[450px] space-y-4 md:space-y-8">
+                <form method="POST" action="{{ route('login') }}" class="w-full max-w-[360px] space-y-4 md:space-y-5">
                     @csrf
 
                     @if ($errors->has('email'))
-                        <div class="rounded-xl md:rounded-2xl bg-red-600 px-4 md:px-6 py-4 text-center text-white shadow-2xl ring-4 ring-red-300/60" role="alert">
-                            <p class="text-xs md:text-sm font-black uppercase tracking-[0.2em]">Peringatan login</p>
-                            <p class="mt-1 text-lg md:text-2xl font-black italic">
+                        <div class="rounded-xl bg-red-600 px-4 py-3 text-center text-white shadow-2xl ring-4 ring-red-300/60" role="alert">
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em]">Peringatan login</p>
+                            <p class="mt-0.5 text-sm md:text-base font-black italic">
                                 {{ $errors->first('email') }}
                             </p>
                         </div>
                     @endif
 
-                    <!-- Input Username -->
                     <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 md:pl-5 text-gray-400 border-r-2 border-gray-100 my-3 pr-3 md:pr-4 group-focus-within:text-blue-600 transition-all">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 border-r-2 border-gray-100 my-2.5 pr-3 group-focus-within:text-blue-600 transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
                         </div>
-
                         <input id="email"
                                type="email"
                                name="email"
                                required
                                autofocus
                                placeholder="Username"
-                               class="w-full pl-16 md:pl-20 pr-6 md:pr-8 py-4 md:py-6 rounded-xl md:rounded-2xl border-none focus:ring-4 md:focus:ring-8 focus:ring-blue-500/30 text-lg md:text-xl font-bold shadow-2xl placeholder-gray-300">
+                               class="w-full pl-14 md:pl-16 pr-4 py-3 md:py-3.5 rounded-xl border-none focus:ring-4 focus:ring-blue-500/30 text-sm md:text-base font-bold shadow-2xl placeholder-gray-300">
                     </div>
 
-                    <!-- Input Password -->
                     <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 md:pl-5 text-gray-400 border-r-2 border-gray-100 my-3 pr-3 md:pr-4 group-focus-within:text-blue-600 transition-all">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 border-r-2 border-gray-100 my-2.5 pr-3 group-focus-within:text-blue-600 transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </div>
-
                         <input id="password"
                                type="password"
                                name="password"
                                required
                                placeholder="Password"
-                               class="w-full pl-16 md:pl-20 pr-6 md:pr-8 py-4 md:py-6 rounded-xl md:rounded-2xl border-none focus:ring-4 md:focus:ring-8 focus:ring-blue-500/30 text-lg md:text-xl font-bold shadow-2xl placeholder-gray-300">
+                               class="w-full pl-14 md:pl-16 pr-4 py-3 md:py-3.5 rounded-xl border-none focus:ring-4 focus:ring-blue-500/30 text-sm md:text-base font-bold shadow-2xl placeholder-gray-300">
                     </div>
 
-                    <!-- CAPTCHA -->
-                    <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-2xl">
-
-                        <label class="block text-[#1e4066] font-black text-sm md:text-lg mb-3 uppercase tracking-wider">
+                    <div class="bg-white rounded-xl p-4 shadow-2xl">
+                        <label class="block text-[#1e4066] font-black text-xs md:text-sm mb-2 uppercase tracking-wider">
                             Verifikasi CAPTCHA
                         </label>
-
-                        <div class="flex items-center gap-3">
-
-                            <div class="bg-[#1e4066] text-white px-6 py-3 rounded-xl text-xl md:text-2xl font-black tracking-[0.2em] shadow-lg">
-                                {{ session('captcha_num1') }} + {{ session('captcha_num2') }}
+                        <div class="flex items-center gap-2">
+                            <div class="bg-[#1e4066] text-white px-4 py-2 rounded-lg text-base md:text-lg font-black tracking-wider shadow-lg whitespace-nowrap">
+                                {{ session('captcha_num1', 3) }} + {{ session('captcha_num2', 7) }}
                             </div>
-
-                            <span class="text-2xl font-black text-[#1e4066]">=</span>
-
+                            <span class="text-xl font-black text-[#1e4066]">=</span>
                             <input
                                 type="number"
                                 name="captcha"
                                 required
                                 placeholder="Jawaban"
-                                class="w-full px-4 py-3 rounded-xl border-none focus:ring-4 focus:ring-blue-500/30 text-lg font-bold shadow-xl placeholder-gray-300">
+                                class="w-full px-3 py-2 rounded-lg border-none focus:ring-4 focus:ring-blue-500/30 text-sm font-bold shadow-xl placeholder-gray-300">
                         </div>
-
                         @error('captcha')
-                            <p class="text-red-600 font-bold mt-2 text-sm">
+                            <p class="text-red-600 font-bold mt-1 text-xs">
                                 {{ $message }}
                             </p>
                         @enderror
                     </div>
 
-                    <!-- Tombol Masuk -->
-                    <div class="flex justify-center pt-6 md:pt-10">
-                        <button type="submit" class="w-full md:w-auto bg-[#1e4066] text-white px-12 md:px-24 py-4 md:py-6 rounded-full font-black shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:bg-[#152e4a] hover:scale-105 active:scale-95 transition-all tracking-[0.2em] md:tracking-[0.4em] text-xl md:text-3xl uppercase italic shadow-blue-900/40">
+                    <div class="flex justify-center pt-2 md:pt-4">
+                        <button type="submit" class="w-full bg-[#1e4066] text-white py-3 md:py-4 rounded-full font-black shadow-[0_15px_30px_rgba(0,0,0,0.25)] hover:bg-[#152e4a] hover:scale-[1.02] active:scale-95 transition-all tracking-[0.2em] text-lg md:text-xl uppercase italic shadow-blue-900/40">
                             MASUK
                         </button>
                     </div>
