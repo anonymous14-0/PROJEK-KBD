@@ -22,6 +22,12 @@
                     </div>
                 @endif
 
+                @if(session('error'))
+                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 @if(session('temporary_password'))
                     <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
                         <p class="font-semibold">Password sementara untuk {{ session('temporary_account_email') }}:</p>
@@ -45,9 +51,15 @@
                                 <td class="border p-2 font-mono text-sm">{{ $guru->nip }}</td>
                                 <td class="border p-2 text-left px-4">{{ $guru->nama_lengkap }}</td>
                                 <td class="border p-2">{{ $guru->jenis_kelamin }}</td>
-                                <td class="border p-2 space-x-2">
-                                    <button class="text-blue-500 hover:underline">Edit</button>
-                                    <button class="text-red-500 hover:underline">Hapus</button>
+                                <td class="border p-2">
+                                    <div class="flex items-center justify-center gap-3">
+                                        <a href="{{ route('admin.guru.edit', $guru) }}" class="text-blue-500 hover:underline">Edit</a>
+                                        <form action="{{ route('admin.guru.destroy', $guru) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data guru {{ $guru->nama_lengkap }}?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500 hover:underline">Hapus</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

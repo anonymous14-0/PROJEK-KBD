@@ -93,4 +93,97 @@ class GuruController extends Controller
             'temporary_account_email' => $email, // Tampilkan balikan tetap plaintext
         ]);
     }
+
+    public function edit(Request $request, Guru $guru)
+    {
+        AuditTrail::record("Admin membuka form edit guru ID {$guru->id_guru}", $request);
+
+        return view('admin.guru.edit', compact('guru'));
+    }
+
+    public function update(Request $request, Guru $guru)
+    {
+        $validated = $request->validate([
+            'nip' => ['required', 'string', 'max:50'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
+        ]);
+
+        $encryptedNip = Guru::encryptData($validated['nip']);
+        if (Guru::where('nip', $encryptedNip)->whereKeyNot($guru->id_guru)->exists()) {
+            throw ValidationException::withMessages([
+                'nip' => 'NIP sudah digunakan.',
+            ]);
+        }
+
+        $newEmail = $validated['nip'].'@siakad.com';
+        $encryptedEmail = User::encryptData($newEmail);
+        $currentUser = $guru->user;
+
+        if (User::where('email', $encryptedEmail)
+            ->when($currentUser, fn ($query) => $query->whereKeyNot($currentUser->id_user))
+            ->exists()) {
+            throw ValidationException::withMessages([
+                'nip' => 'Email akun guru otomatis sudah digunakan.',
+            ]);
+        }
+
+        $oldNip = $guru->nip;
+        $oldName = $guru->nama_lengkap;
+
+        try {
+            DB::transaction(function () use ($guru, $validated, $newEmail, $currentUser) {
+                $guru->update($validated);
+
+                if ($currentUser) {
+                    $currentUser->update([
+                        'nama_lengkap' => $validated['nama_lengkap'],
+                        'email' => $newEmail,
+                    ]);
+                }
+            });
+        } catch (\Throwable $e) {
+            Log::error('Gagal memperbarui guru dan akun login', [
+                'id_guru' => $guru->id_guru,
+                'nip' => $request->input('nip'),
+                'ip_address' => $request->ip(),
+                'exception' => $e,
+            ]);
+
+            return back()->withInput()->with('error', 'Gagal memperbarui data guru. Silakan coba lagi.');
+        }
+
+        AuditTrail::record(
+            "Admin mengedit guru ID {$guru->id_guru} dari NIP {$oldNip} / {$oldName} menjadi NIP {$validated['nip']} / {$validated['nama_lengkap']}",
+            $request
+        );
+
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil diperbarui.');
+    }
+
+    public function destroy(Request $request, Guru $guru)
+    {
+        $guruId = $guru->id_guru;
+        $nip = $guru->nip;
+        $name = $guru->nama_lengkap;
+
+        try {
+            DB::transaction(function () use ($guru) {
+                $guru->delete();
+            });
+        } catch (\Throwable $e) {
+            Log::error('Gagal menghapus guru dan akun login', [
+                'id_guru' => $guruId,
+                'nip' => $nip,
+                'ip_address' => $request->ip(),
+                'exception' => $e,
+            ]);
+
+            return back()->with('error', 'Gagal menghapus data guru. Silakan coba lagi.');
+        }
+
+        AuditTrail::record("Admin menghapus guru ID {$guruId} dengan NIP {$nip} / {$name}", $request);
+
+        return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil dihapus.');
+    }
 }
