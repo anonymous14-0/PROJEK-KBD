@@ -7,43 +7,35 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('siswa', function (Blueprint $table) {
-            // Primary Key
             $table->id('id_siswa');
-
-            // Data utama
             $table->string('nis')->unique();
             $table->string('nama_lengkap');
             $table->enum('jenis_kelamin', ['L', 'P']);
 
-            // Relasi ke kelas
+            // Kolom untuk menghubungkan siswa dengan tabel kelas
             $table->unsignedBigInteger('id_kelas');
 
+            // Relasi (Foreign Key) ke tabel kelas.
+            // onDelete cascade berarti jika kelas dihapus, siswa di dalamnya ikut terhapus.
             $table->foreign('id_kelas')
                   ->references('id_kelas')
                   ->on('kelas')
                   ->onDelete('cascade');
 
-            // Index (biar query cepat)
             $table->index('nama_lengkap');
             $table->index('id_kelas');
-
-            // Timestamps
             $table->timestamps();
+
+            // Fitur Soft Delete untuk siswa (bisa dipulihkan kembali)
+            $table->softDeletes();
         });
 
-        // Optional: validasi tambahan (MySQL 8+)
         DB::statement("ALTER TABLE siswa ADD CONSTRAINT chk_jk_siswa CHECK (jenis_kelamin IN ('L','P'))");
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('siswa');

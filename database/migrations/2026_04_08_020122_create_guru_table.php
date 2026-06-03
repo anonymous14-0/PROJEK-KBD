@@ -7,36 +7,36 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('guru', function (Blueprint $table) {
-            // Primary Key
+            // Membuat Primary Key dengan nama id_guru
             $table->id('id_guru');
 
-            // Data utama
+            // Kolom nip dibuat unik agar tidak ada guru dengan NIP yang sama
             $table->string('nip')->unique();
             $table->string('nama_lengkap');
+
+            // Enum membatasi input hanya 'L' (Laki-laki) atau 'P' (Perempuan)
             $table->enum('jenis_kelamin', ['L', 'P']);
 
-            // Index (biar pencarian cepat)
+            // Membuat index pada nama agar proses pencarian (search) lebih cepat
             $table->index('nama_lengkap');
 
-            // Timestamps
+            // Otomatis membuat kolom created_at dan updated_at
             $table->timestamps();
+
+            // Fitur Soft Delete: Membuat kolom deleted_at agar data tidak hilang permanen
+            $table->softDeletes();
         });
 
-        // Optional: validasi tambahan (MySQL 8+)
+        // Validasi database tingkat lanjut untuk memastikan tidak ada data gender selain L/P
         DB::statement("ALTER TABLE guru ADD CONSTRAINT chk_jk_guru CHECK (jenis_kelamin IN ('L','P'))");
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
+        // Menghapus tabel jika perintah php artisan migrate:rollback dijalankan
         Schema::dropIfExists('guru');
     }
 };
