@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User; // Tambahan untuk memanggil fungsi enkripsi
 use App\Services\AuditTrail;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -38,10 +39,14 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // 1. Enkripsi input email yang diketik user sebelum dicocokkan ke database
+        $encryptedEmail = User::encryptData($this->input('email'));
+
+        // 2. Gunakan email yang sudah terenkripsi di dalam credentials
         $credentials = [
-            'email' => $this->input('email'),
+            'email' => $encryptedEmail,
             'password' => $this->input('password'),
-            'is_active' => true,
+            'is_active' => true, // Fitur bawaan Anda tetap dipertahankan
         ];
 
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
@@ -52,7 +57,7 @@ class LoginRequest extends FormRequest
             AuditTrail::recordFailedLogin($this);
 
             Log::warning('Percobaan login gagal', [
-                'email' => $this->input('email'),
+                'email' => $this->input('email'), // Tetap log plaintext agar mudah dibaca di log
                 'ip_address' => $this->ip(),
                 'user_agent' => $this->userAgent(),
             ]);
@@ -81,7 +86,7 @@ class LoginRequest extends FormRequest
         event(new Lockout($this));
 
         Log::warning('Rate limit login terpicu', [
-            'email' => $this->input('email'),
+            'email' => $this->input('email'), // Tetap menggunakan plaintext untuk log
             'ip_address' => $this->ip(),
         ]);
 
