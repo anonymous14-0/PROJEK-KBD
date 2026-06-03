@@ -8,12 +8,17 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                
+
                 <div class="flex justify-between mb-4">
                     <h3 class="text-lg font-bold text-gray-700">Daftar Guru</h3>
-                    <a href="{{ route('admin.guru.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm hover:bg-indigo-700">
-                        + Tambah Guru
-                    </a>
+                    <div class="flex gap-2">
+                        <a href="{{ route('admin.guru.trashed') }}" class="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600">
+                            Tempat Sampah
+                        </a>
+                        <a href="{{ route('admin.guru.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm hover:bg-indigo-700">
+                            + Tambah Guru
+                        </a>
+                    </div>
                 </div>
 
                 @if(session('success'))
@@ -21,21 +26,6 @@
                         {{ session('success') }}
                     </div>
                 @endif
-
-                @if(session('error'))
-                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                @if(session('temporary_password'))
-                    <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
-                        <p class="font-semibold">Password sementara untuk {{ session('temporary_account_email') }}:</p>
-                        <p class="font-mono text-lg">{{ session('temporary_password') }}</p>
-                        <p class="text-sm mt-1">Password hanya ditampilkan sekali. User wajib menggantinya saat login pertama.</p>
-                    </div>
-                @endif
-
                 <table class="w-full border-collapse border border-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
@@ -54,7 +44,7 @@
                                 <td class="border p-2">
                                     <div class="flex items-center justify-center gap-3">
                                         <a href="{{ route('admin.guru.edit', $guru) }}" class="text-blue-500 hover:underline">Edit</a>
-                                        <form action="{{ route('admin.guru.destroy', $guru) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data guru {{ $guru->nama_lengkap }}?')">
+                                        <form action="{{ route('admin.guru.destroy', $guru) }}" method="POST" onsubmit="return confirm('Yakin ingin memindahkan data guru {{ $guru->nama_lengkap }} ke tempat sampah?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500 hover:underline">Hapus</button>
@@ -71,7 +61,6 @@
                         @endforelse
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
