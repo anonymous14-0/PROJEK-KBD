@@ -20,6 +20,12 @@
                     </div>
                 @endif
 
+                @if(session('error'))
+                    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 @if(session('temporary_password'))
                     <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
                         <p class="font-semibold">Password sementara untuk {{ session('temporary_account_email') }}:</p>
@@ -50,8 +56,14 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <button class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
-                                <button class="text-red-600 hover:text-red-900">Hapus</button>
+                                <div class="flex items-center gap-3">
+                                    <a href="{{ route('admin.siswa.edit', $s) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <form action="{{ route('admin.siswa.destroy', $s) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data siswa {{ $s->nama_lengkap }}?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

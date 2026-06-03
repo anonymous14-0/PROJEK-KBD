@@ -38,6 +38,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/guru', [GuruController::class, 'index'])->name('admin.guru.index');
     Route::get('/admin/guru/create', [GuruController::class, 'create'])->name('admin.guru.create');
     Route::post('/admin/guru', [GuruController::class, 'store'])->name('admin.guru.store');
+    Route::get('/admin/guru/{guru}/edit', [GuruController::class, 'edit'])->name('admin.guru.edit');
+    Route::put('/admin/guru/{guru}', [GuruController::class, 'update'])->name('admin.guru.update');
+    Route::delete('/admin/guru/{guru}', [GuruController::class, 'destroy'])->name('admin.guru.destroy');
 
     // CRUD Siswa
     Route::resource('/admin/siswa', SiswaController::class)->names('admin.siswa');
