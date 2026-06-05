@@ -73,6 +73,9 @@
                             <p class="mt-0.5 text-sm md:text-base font-black italic">
                                 {{ $errors->first('email') }}
                             </p>
+                            <p class="mt-2 text-[10px] md:text-xs font-bold leading-relaxed opacity-95">
+                                Batas percobaan login adalah 5 kali. Jika habis, login akan diblokir 5 menit lalu bisa dicoba kembali.
+                            </p>
                         </div>
                     @endif
 
@@ -83,11 +86,12 @@
                             </svg>
                         </div>
                         <input id="email"
-                               type="email"
+                               type="text"
                                name="email"
                                required
                                autofocus
-                               placeholder="Username"
+                               placeholder="Username / Email"
+                               value="{{ old('email') }}"
                                class="w-full pl-14 md:pl-16 pr-4 py-3 md:py-3.5 rounded-xl border-none focus:ring-4 focus:ring-blue-500/30 text-sm md:text-base font-bold shadow-2xl placeholder-gray-300">
                     </div>
 

@@ -5,7 +5,6 @@ namespace App\Http\Requests\Auth;
 use App\Models\User; // Tambahan untuk memanggil fungsi enkripsi
 use App\Services\AuditTrail;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +14,10 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    public const SPAM_WARNING_MESSAGE = 'mau ngapain spam cuki';
+    public const MAX_LOGIN_ATTEMPTS = 5;
+    public const LOCKOUT_SECONDS = 300;
+    public const INVALID_LOGIN_MESSAGE = 'Email/username atau password salah.';
+    public const LOCKOUT_MESSAGE = 'Percobaan login sudah habis. Login diblokir sementara selama 5 menit.';
 
     public function authorize(): bool
     {
@@ -25,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string'],
         ];
     }
@@ -50,9 +52,12 @@ class LoginRequest extends FormRequest
         ];
 
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
+            // Tambah percobaan gagal dan simpan status blokir selama 5 menit.
+            RateLimiter::hit($this->throttleKey(), self::LOCKOUT_SECONDS);
 
-            // Tambah percobaan gagal + lock 60 detik
-            RateLimiter::hit($this->throttleKey(), 60);
+            if (RateLimiter::tooManyAttempts($this->throttleKey(), self::MAX_LOGIN_ATTEMPTS)) {
+                $this->startLockoutPeriod();
+            }
 
             AuditTrail::recordFailedLogin($this);
 
@@ -60,10 +65,11 @@ class LoginRequest extends FormRequest
                 'email' => $this->input('email'), // Tetap log plaintext agar mudah dibaca di log
                 'ip_address' => $this->ip(),
                 'user_agent' => $this->userAgent(),
+                'sisa_percobaan' => $this->remainingAttempts(),
             ]);
 
             throw ValidationException::withMessages([
-                'email' => self::SPAM_WARNING_MESSAGE,
+                'email' => $this->loginFailureMessage(),
             ]);
         }
 
@@ -78,8 +84,8 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        // Maksimal 5 percobaan login gagal
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        // Maksimal 5 percobaan login gagal dalam periode blokir 5 menit.
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), self::MAX_LOGIN_ATTEMPTS)) {
             return;
         }
 
@@ -88,11 +94,43 @@ class LoginRequest extends FormRequest
         Log::warning('Rate limit login terpicu', [
             'email' => $this->input('email'), // Tetap menggunakan plaintext untuk log
             'ip_address' => $this->ip(),
+            'blokir_detik' => RateLimiter::availableIn($this->throttleKey()),
         ]);
 
         throw ValidationException::withMessages([
-            'email' => self::SPAM_WARNING_MESSAGE,
+            'email' => $this->lockoutMessage(),
         ]);
+    }
+
+    public function remainingAttempts(): int
+    {
+        return max(0, RateLimiter::remaining($this->throttleKey(), self::MAX_LOGIN_ATTEMPTS));
+    }
+
+    private function loginFailureMessage(): string
+    {
+        if (RateLimiter::tooManyAttempts($this->throttleKey(), self::MAX_LOGIN_ATTEMPTS)) {
+            return $this->lockoutMessage();
+        }
+
+        return self::INVALID_LOGIN_MESSAGE.' Sisa percobaan login: '.$this->remainingAttempts().' dari '.self::MAX_LOGIN_ATTEMPTS.'.';
+    }
+
+    private function lockoutMessage(): string
+    {
+        $seconds = RateLimiter::availableIn($this->throttleKey());
+        $minutes = max(1, (int) ceil($seconds / 60));
+
+        return self::LOCKOUT_MESSAGE.' Silakan coba lagi dalam '.$minutes.' menit.';
+    }
+
+    private function startLockoutPeriod(): void
+    {
+        RateLimiter::clear($this->throttleKey());
+
+        for ($attempt = 1; $attempt <= self::MAX_LOGIN_ATTEMPTS; $attempt++) {
+            RateLimiter::hit($this->throttleKey(), self::LOCKOUT_SECONDS);
+        }
     }
 
     /**
