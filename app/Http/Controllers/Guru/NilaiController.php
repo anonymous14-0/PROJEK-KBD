@@ -86,9 +86,29 @@ class NilaiController extends Controller
             'tahun_ajaran' => ['required', 'regex:/^\d{4}\/\d{4}$/'],
         ]);
 
+        $before = [
+            'nilai_uts' => $nilai->nilai_uts,
+            'nilai_uas' => $nilai->nilai_uas,
+            'semester' => $nilai->semester,
+            'tahun_ajaran' => $nilai->tahun_ajaran,
+        ];
+        $after = [
+            'nilai_uts' => $validated['nilai_uts'],
+            'nilai_uas' => $validated['nilai_uas'],
+            'semester' => $validated['semester'],
+            'tahun_ajaran' => $validated['tahun_ajaran'],
+        ];
+
         $nilai->update($validated);
 
-        AuditTrail::record("Guru mengupdate nilai ID {$nilai->id_nilai} milik siswa ID {$nilai->id_siswa}", $request);
+        $detailPerubahan = AuditTrail::describeChanges($before, $after, [
+            'nilai_uts' => 'Nilai UTS',
+            'nilai_uas' => 'Nilai UAS',
+            'semester' => 'Semester',
+            'tahun_ajaran' => 'Tahun ajaran',
+        ]);
+
+        AuditTrail::record("Guru mengupdate nilai ID {$nilai->id_nilai} milik siswa ID {$nilai->id_siswa}. {$detailPerubahan}", $request);
 
         return redirect()->route('guru.nilai.index')->with('success', 'Nilai berhasil diperbarui.');
     }

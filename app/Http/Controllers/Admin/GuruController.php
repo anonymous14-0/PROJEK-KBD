@@ -141,8 +141,18 @@ class GuruController extends Controller
             throw ValidationException::withMessages(['nip' => 'Email akun guru otomatis sudah digunakan.']);
         }
 
-        $oldNip = $guru->nip;
-        $oldName = $guru->nama_lengkap;
+        $before = [
+            'nip' => $guru->nip,
+            'nama_lengkap' => $guru->nama_lengkap,
+            'jenis_kelamin' => $guru->jenis_kelamin,
+            'email' => $currentUser?->email,
+        ];
+        $after = [
+            'nip' => $validated['nip'],
+            'nama_lengkap' => $validated['nama_lengkap'],
+            'jenis_kelamin' => $validated['jenis_kelamin'],
+            'email' => $newEmail,
+        ];
 
         try {
             DB::transaction(function () use ($guru, $validated, $newEmail, $currentUser) {
@@ -158,7 +168,14 @@ class GuruController extends Controller
             return back()->withInput()->with('error', 'Gagal memperbarui data guru.');
         }
 
-        AuditTrail::record("Admin mengedit guru ID {$guru->id_guru}", $request);
+        $detailPerubahan = AuditTrail::describeChanges($before, $after, [
+            'nip' => 'NIP',
+            'nama_lengkap' => 'Nama lengkap',
+            'jenis_kelamin' => 'Jenis kelamin',
+            'email' => 'Email akun',
+        ]);
+
+        AuditTrail::record("Admin mengedit guru ID {$guru->id_guru}. {$detailPerubahan}", $request);
         return redirect()->route('admin.guru.index')->with('success', 'Data guru berhasil diperbarui.');
     }
 

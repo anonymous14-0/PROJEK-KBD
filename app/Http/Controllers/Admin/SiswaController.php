@@ -145,6 +145,21 @@ class SiswaController extends Controller
             throw ValidationException::withMessages(['nis' => 'Email akun otomatis digunakan.']);
         }
 
+        $before = [
+            'nis' => $siswa->nis,
+            'nama_lengkap' => $siswa->nama_lengkap,
+            'jenis_kelamin' => $siswa->jenis_kelamin,
+            'id_kelas' => $siswa->id_kelas,
+            'email' => $currentUser?->email,
+        ];
+        $after = [
+            'nis' => $validated['nis'],
+            'nama_lengkap' => $validated['nama_lengkap'],
+            'jenis_kelamin' => $validated['jenis_kelamin'],
+            'id_kelas' => $validated['id_kelas'],
+            'email' => $newEmail,
+        ];
+
         try {
             DB::transaction(function () use ($siswa, $validated, $newEmail, $currentUser) {
                 $siswa->update($validated);
@@ -156,7 +171,15 @@ class SiswaController extends Controller
             return back()->withInput()->with('error', 'Gagal memperbarui data siswa.');
         }
 
-        AuditTrail::record("Admin mengedit siswa ID {$siswa->id_siswa}", $request);
+        $detailPerubahan = AuditTrail::describeChanges($before, $after, [
+            'nis' => 'NIS',
+            'nama_lengkap' => 'Nama lengkap',
+            'jenis_kelamin' => 'Jenis kelamin',
+            'id_kelas' => 'ID kelas',
+            'email' => 'Email akun',
+        ]);
+
+        AuditTrail::record("Admin mengedit siswa ID {$siswa->id_siswa}. {$detailPerubahan}", $request);
         return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
     }
 
