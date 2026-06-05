@@ -26,7 +26,7 @@
                                     <th class="py-5 border-r border-blue-300 w-[20%]">User</th>
                                     <th class="py-5 border-r border-blue-300 w-[10%]">Role</th>
                                     <th class="py-5 border-r border-blue-300 w-[15%]">IP Address</th>
-                                    <th class="py-5 w-[37%]">Aktivitas</th>
+                                    <th class="py-5 w-[37%]">Deskripsi Aktivitas</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 font-medium text-sm">
@@ -40,7 +40,7 @@
                                             </span>
                                         </td>
                                         <td class="py-4 border-r border-gray-200 font-mono text-xs">{{ $log->ip_address ?? '-' }}</td>
-                                        <td class="py-4 text-left px-8">{{ $log->aktivitas }}</td>
+                                        <td class="py-4 text-left px-8"><span class="whitespace-pre-line">{{ $log->aktivitas }}</span></td>
                                     </tr>
                                 @empty
                                     <tr>

@@ -67,15 +67,15 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
         $response->assertSessionHasErrors([
-            'email' => LoginRequest::SPAM_WARNING_MESSAGE,
+            'email' => LoginRequest::INVALID_LOGIN_MESSAGE.' Sisa percobaan login: 4 dari '.LoginRequest::MAX_LOGIN_ATTEMPTS.'.',
         ]);
     }
 
-    public function test_rate_limited_login_shows_spam_warning_message(): void
+    public function test_rate_limited_login_shows_five_minute_lockout_message(): void
     {
         $user = User::factory()->create();
 
-        for ($attempt = 1; $attempt <= 5; $attempt++) {
+        for ($attempt = 1; $attempt <= LoginRequest::MAX_LOGIN_ATTEMPTS; $attempt++) {
             $this->post('/login', [
                 'email' => $user->email,
                 'password' => 'wrong-password',
@@ -89,8 +89,37 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
         $response->assertSessionHasErrors([
-            'email' => LoginRequest::SPAM_WARNING_MESSAGE,
+            'email' => LoginRequest::LOCKOUT_MESSAGE.' Silakan coba lagi dalam 5 menit.',
         ]);
+    }
+
+    public function test_rate_limited_login_can_try_again_after_five_minutes(): void
+    {
+        $user = User::factory()->create();
+
+        for ($attempt = 1; $attempt <= LoginRequest::MAX_LOGIN_ATTEMPTS; $attempt++) {
+            $this->post('/login', [
+                'email' => $user->email,
+                'password' => 'wrong-password',
+            ]);
+        }
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+
+        $this->travel(5)->minutes();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('dashboard', absolute: false));
     }
 
     public function test_failed_login_for_existing_user_is_recorded_in_activity_log(): void

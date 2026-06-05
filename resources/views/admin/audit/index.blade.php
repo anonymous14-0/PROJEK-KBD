@@ -13,7 +13,7 @@
                         <tr class="border border-gray-300 block md:table-row">
                             <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Waktu</th>
                             <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Pelaku</th>
-                            <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Aktivitas</th>
+                            <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Deskripsi Aktivitas</th>
                         </tr>
                     </thead>
                     <tbody class="block md:table-row-group">
@@ -21,7 +21,7 @@
                         <tr class="bg-white border border-gray-300 block md:table-row">
                             <td class="p-2 md:border md:border-grey-500 block md:table-cell">{{ $log->created_at }}</td>
                             <td class="p-2 md:border md:border-grey-500 block md:table-cell font-semibold">{{ $log->user->nama_lengkap ?? 'System' }}</td>
-                            <td class="p-2 md:border md:border-grey-500 block md:table-cell">{{ $log->aktivitas }}</td>
+                            <td class="p-2 md:border md:border-grey-500 block md:table-cell"><span class="whitespace-pre-line">{{ $log->aktivitas }}</span></td>
                         </tr>
                         @endforeach
                     </tbody>
