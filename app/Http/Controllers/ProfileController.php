@@ -26,12 +26,26 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $validated = $request->validated();
+        $before = [
+            'nama_lengkap' => $user->nama_lengkap,
+            'email' => $user->email,
+        ];
+        $after = [
+            'nama_lengkap' => $validated['nama_lengkap'] ?? $user->nama_lengkap,
+            'email' => $validated['email'] ?? $user->email,
+        ];
 
+        $user->fill($validated);
+        $user->save();
 
-        $request->user()->save();
+        $detailPerubahan = AuditTrail::describeChanges($before, $after, [
+            'nama_lengkap' => 'Nama lengkap',
+            'email' => 'Email akun',
+        ]);
 
-        AuditTrail::record('User memperbarui profil', $request);
+        AuditTrail::record("User memperbarui profil. {$detailPerubahan}", $request);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
