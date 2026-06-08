@@ -12,6 +12,7 @@ Route::get('/', function () {
 });
 
 // --- DASHBOARD UTAMA (LOGIKA PENGALIHAN ROLE) ---
+// Keamanan: route dashboard dilindungi auth + role agar hanya user berotorisasi yang dapat masuk.
 Route::get('/dashboard', function () {
     $role = auth()->user()->role;
     // Otomatis mengarahkan user sesuai role masing-masing
@@ -21,10 +22,10 @@ Route::get('/dashboard', function () {
     elseif ($role === 'audit') return redirect()->route('audit.dashboard');
 
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'role:admin,guru,siswa,audit'])->name('dashboard');
 
 // --- GRUP ROUTE KHUSUS ADMIN ---
-// Middleware ini menjaga agar hanya User Login yang ber-role 'admin' yang bisa mengakses
+// Keamanan: middleware role menjaga agar hanya User Login ber-role 'admin' yang bisa mengakses.
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin/dashboard', function () {
@@ -65,6 +66,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 // --- GRUP ROUTE KHUSUS GURU ---
+// Keamanan: halaman guru dilindungi auth + role:guru.
 Route::middleware(['auth', 'role:guru'])->group(function () {
     Route::get('/guru/dashboard', function () {
         return view('guru.dashboard');
@@ -73,17 +75,20 @@ Route::middleware(['auth', 'role:guru'])->group(function () {
 });
 
 // --- GRUP ROUTE KHUSUS SISWA ---
+// Keamanan: halaman siswa dilindungi auth + role:siswa.
 Route::middleware(['auth', 'role:siswa'])->group(function () {
     Route::get('/siswa/dashboard', [App\Http\Controllers\Siswa\DashboardController::class, 'index'])->name('siswa.dashboard');
 });
 
 // --- GRUP ROUTE KHUSUS AUDIT ---
+// Keamanan: halaman audit dilindungi auth + role:audit.
 Route::middleware(['auth', 'role:audit'])->group(function () {
     Route::get('/audit/dashboard', [App\Http\Controllers\Audit\AuditController::class, 'index'])->name('audit.dashboard');
 });
 
 // --- ROUTE PROFILE BAWAAN LARAVEL ---
-Route::middleware('auth')->group(function () {
+// Keamanan: profil memerlukan auth dan role valid, bukan hanya session anonim.
+Route::middleware(['auth', 'role:admin,guru,siswa,audit'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

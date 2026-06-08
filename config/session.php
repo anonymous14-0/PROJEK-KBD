@@ -169,7 +169,8 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE', env('APP_ENV') === 'production'),
+    // Keamanan: karena aplikasi sudah berjalan di HTTPS, cookie session hanya boleh dikirim melalui TLS.
+    'secure' => env('SESSION_SECURE_COOKIE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +183,7 @@ return [
     |
     */
 
+    // Keamanan: HttpOnly mencegah JavaScript membaca cookie session saat terjadi XSS.
     'http_only' => env('SESSION_HTTP_ONLY', true),
 
     /*
@@ -199,7 +201,8 @@ return [
     |
     */
 
-    'same_site' => env('SESSION_SAME_SITE', env('APP_ENV') === 'production' ? 'strict' : 'lax'),
+    // Keamanan: SameSite Strict mengurangi risiko pengiriman cookie pada request lintas situs.
+    'same_site' => env('SESSION_SAME_SITE', 'strict'),
 
     /*
     |--------------------------------------------------------------------------

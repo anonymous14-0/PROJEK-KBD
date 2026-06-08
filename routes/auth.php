@@ -36,7 +36,8 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+// Keamanan: route akun yang memerlukan login dibatasi ke role aplikasi yang valid.
+Route::middleware(['auth', 'role:admin,guru,siswa,audit'])->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
