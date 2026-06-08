@@ -15,9 +15,9 @@ use Illuminate\Validation\ValidationException;
 class LoginRequest extends FormRequest
 {
     public const MAX_LOGIN_ATTEMPTS = 5;
-    public const LOCKOUT_SECONDS = 300;
+    public const LOCKOUT_SECONDS = 900; // Keamanan: blokir percobaan brute-force selama 15 menit sesuai batas OWASP rate limiting.
     public const INVALID_LOGIN_MESSAGE = 'Email/username atau password salah.';
-    public const LOCKOUT_MESSAGE = 'Percobaan login sudah habis. Login diblokir sementara selama 5 menit.';
+    public const LOCKOUT_MESSAGE = 'Percobaan login sudah habis. Login diblokir sementara selama 15 menit.';
 
     public function authorize(): bool
     {
@@ -41,10 +41,10 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        // 1. Enkripsi input email yang diketik user sebelum dicocokkan ke database
+        // Keamanan: input email dinormalisasi ke format terenkripsi sebelum Auth::attempt; query autentikasi Laravel/Eloquent menggunakan parameter binding/prepared statement.
         $encryptedEmail = User::encryptData($this->input('email'));
 
-        // 2. Gunakan email yang sudah terenkripsi di dalam credentials
+        // Keamanan: hanya kirim kredensial tervalidasi ke Auth::attempt agar password diverifikasi oleh guard Laravel tanpa raw SQL.
         $credentials = [
             'email' => $encryptedEmail,
             'password' => $this->input('password'),
@@ -52,7 +52,7 @@ class LoginRequest extends FormRequest
         ];
 
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
-            // Tambah percobaan gagal dan simpan status blokir selama 5 menit.
+            // Keamanan: catat percobaan gagal dan simpan status blokir 15 menit setelah melewati 5 percobaan.
             RateLimiter::hit($this->throttleKey(), self::LOCKOUT_SECONDS);
 
             if (RateLimiter::tooManyAttempts($this->throttleKey(), self::MAX_LOGIN_ATTEMPTS)) {
@@ -73,7 +73,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        // Reset percobaan jika login berhasil
+        // Keamanan: reset penghitung rate limiter setelah login berhasil supaya pengguna sah tidak tetap terkunci.
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -84,7 +84,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        // Maksimal 5 percobaan login gagal dalam periode blokir 5 menit.
+        // Keamanan: maksimal 5 percobaan login gagal dalam periode blokir 15 menit untuk mengurangi brute-force kredensial.
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), self::MAX_LOGIN_ATTEMPTS)) {
             return;
         }

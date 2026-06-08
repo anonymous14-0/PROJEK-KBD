@@ -12,6 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
+            // Keamanan: validasi timeout sesi dan fingerprint User-Agent pada seluruh request web.
+            \App\Http\Middleware\ValidateSessionSecurity::class,
             \App\Http\Middleware\EnsurePasswordHasBeenChanged::class,
         ]);
 

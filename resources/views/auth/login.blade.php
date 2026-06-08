@@ -74,7 +74,7 @@
                                 {{ $errors->first('email') }}
                             </p>
                             <p class="mt-2 text-[10px] md:text-xs font-bold leading-relaxed opacity-95">
-                                Batas percobaan login adalah 5 kali. Jika habis, login akan diblokir 5 menit lalu bisa dicoba kembali.
+                                Batas percobaan login adalah 5 kali. Jika habis, login akan diblokir 15 menit lalu bisa dicoba kembali.
                             </p>
                         </div>
                     @endif
