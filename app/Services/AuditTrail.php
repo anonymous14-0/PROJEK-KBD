@@ -18,8 +18,54 @@ class AuditTrail
             'id_user' => $userId,
             'aktivitas' => $aktivitas,
             'ip_address' => $request?->ip(),
+            'ipv4_address' => $request ? self::extractIpv4Address($request) : null,
             'user_agent' => $request?->userAgent(),
         ]);
+    }
+
+    public static function extractIpv4Address(Request $request): ?string
+    {
+        $candidates = [
+            $request->server('REMOTE_ADDR'),
+            $request->ip(),
+            $request->header('CF-Connecting-IP'),
+            $request->header('X-Real-IP'),
+            $request->header('X-Forwarded-For'),
+            $request->header('Forwarded'),
+        ];
+
+        foreach ($candidates as $candidate) {
+            foreach (self::splitIpCandidates($candidate) as $ipAddress) {
+                if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                    return $ipAddress;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private static function splitIpCandidates(mixed $candidate): array
+    {
+        if (! is_string($candidate) || trim($candidate) === '') {
+            return [];
+        }
+
+        $candidate = str_replace(['for=', '"', '[', ']'], '', $candidate);
+        $parts = preg_split('/[,;\s]+/', $candidate) ?: [];
+
+        return array_values(array_filter(array_map(static function (string $part): string {
+            $part = trim($part);
+
+            if (str_contains($part, ':') && substr_count($part, ':') === 1) {
+                $part = explode(':', $part, 2)[0];
+            }
+
+            return $part;
+        }, $parts)));
     }
 
     /**
