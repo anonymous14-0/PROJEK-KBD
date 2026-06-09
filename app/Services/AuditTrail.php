@@ -75,11 +75,31 @@ class AuditTrail
         return (string) $value;
     }
 
+    public static function recordSuccessfulLogin(Request $request): void
+    {
+        // Keamanan: audit log login berhasil membantu mendeteksi pemakaian akun yang tidak wajar.
+        self::record('Login berhasil', $request);
+    }
+
     public static function recordFailedLogin(Request $request): void
     {
         $email = (string) $request->input('email');
-        $userId = User::where('email', $email)->value('id_user');
+        // Keamanan: lookup user memakai Eloquent parameter binding/prepared statement dan email terenkripsi seperti di database.
+        $userId = User::where('email', User::encryptData($email))->value('id_user');
 
+        // Keamanan: audit log login gagal membantu mendeteksi brute-force dan credential stuffing.
         self::record("Percobaan login gagal untuk email {$email}", $request, $userId);
+    }
+
+    public static function recordLogout(Request $request): void
+    {
+        // Keamanan: audit log logout mencatat akhir sesi pengguna untuk rekonsiliasi aktivitas.
+        self::record('Logout', $request);
+    }
+
+    public static function recordSessionExpired(Request $request, string $reason): void
+    {
+        // Keamanan: audit log session expired/User-Agent berubah memberi jejak forensik indikasi hijacking.
+        self::record($reason, $request);
     }
 }

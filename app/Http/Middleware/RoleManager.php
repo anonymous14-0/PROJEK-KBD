@@ -13,14 +13,16 @@ class RoleManager
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         $user = $request->user();
 
+        // Keamanan: halaman berotorisasi wajib memiliki user terautentikasi.
         if (! $user) {
             return redirect()->route('login');
         }
 
+        // Keamanan: akun nonaktif dipaksa logout agar session lama tidak tetap berwenang.
         if (! $user->is_active) {
             auth()->logout();
             $request->session()->invalidate();
@@ -29,7 +31,8 @@ class RoleManager
             abort(403, 'Akun Anda tidak aktif. Silakan hubungi administrator.');
         }
 
-        if ($user->role !== $role) {
+        // Keamanan: validasi role/authorization di setiap grup halaman yang memerlukan login.
+        if ($roles !== [] && ! in_array($user->role, $roles, true)) {
             abort(403, 'Akses ditolak. Role Anda tidak berhak membuka halaman ini.');
         }
 

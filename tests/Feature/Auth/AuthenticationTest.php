@@ -71,7 +71,7 @@ class AuthenticationTest extends TestCase
         ]);
     }
 
-    public function test_rate_limited_login_shows_five_minute_lockout_message(): void
+    public function test_rate_limited_login_shows_fifteen_minute_lockout_message(): void
     {
         $user = User::factory()->create();
 
@@ -89,11 +89,11 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
         $response->assertSessionHasErrors([
-            'email' => LoginRequest::LOCKOUT_MESSAGE.' Silakan coba lagi dalam 5 menit.',
+            'email' => LoginRequest::LOCKOUT_MESSAGE.' Silakan coba lagi dalam 15 menit.',
         ]);
     }
 
-    public function test_rate_limited_login_can_try_again_after_five_minutes(): void
+    public function test_rate_limited_login_can_try_again_after_fifteen_minutes(): void
     {
         $user = User::factory()->create();
 
@@ -111,7 +111,7 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
 
-        $this->travel(5)->minutes();
+        $this->travel(15)->minutes();
 
         $response = $this->post('/login', [
             'email' => $user->email,
