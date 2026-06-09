@@ -18,8 +18,7 @@ return new class extends Migration
             // Kolom untuk menghubungkan siswa dengan tabel kelas
             $table->unsignedBigInteger('id_kelas');
 
-            // Relasi (Foreign Key) ke tabel kelas.
-            // onDelete cascade berarti jika kelas dihapus, siswa di dalamnya ikut terhapus.
+            // Relasi (Foreign Key) ke tabel kelas
             $table->foreign('id_kelas')
                   ->references('id_kelas')
                   ->on('kelas')
@@ -29,11 +28,15 @@ return new class extends Migration
             $table->index('id_kelas');
             $table->timestamps();
 
-            // Fitur Soft Delete untuk siswa (bisa dipulihkan kembali)
+            // Soft Delete
             $table->softDeletes();
         });
 
-        DB::statement("ALTER TABLE siswa ADD CONSTRAINT chk_jk_siswa CHECK (jenis_kelamin IN ('L','P'))");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement(
+                "ALTER TABLE siswa ADD CONSTRAINT chk_jk_siswa CHECK (jenis_kelamin IN ('L','P'))"
+            );
+        }
     }
 
     public function down(): void

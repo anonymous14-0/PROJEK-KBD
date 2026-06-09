@@ -17,26 +17,29 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('nama_lengkap');
 
-            // Enum membatasi input hanya 'L' (Laki-laki) atau 'P' (Perempuan)
+            // Hanya menerima nilai L atau P
             $table->enum('jenis_kelamin', ['L', 'P']);
 
-            // Membuat index pada nama agar proses pencarian (search) lebih cepat
+            // Index untuk mempercepat pencarian
             $table->index('nama_lengkap');
 
-            // Otomatis membuat kolom created_at dan updated_at
+            // created_at dan updated_at
             $table->timestamps();
 
-            // Fitur Soft Delete: Membuat kolom deleted_at agar data tidak hilang permanen
+            // Soft delete
             $table->softDeletes();
         });
 
-        // Validasi database tingkat lanjut untuk memastikan tidak ada data gender selain L/P
-        DB::statement("ALTER TABLE guru ADD CONSTRAINT chk_jk_guru CHECK (jenis_kelamin IN ('L','P'))");
+        // SQLite tidak mendukung ALTER TABLE ADD CONSTRAINT
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement(
+                "ALTER TABLE guru ADD CONSTRAINT chk_jk_guru CHECK (jenis_kelamin IN ('L','P'))"
+            );
+        }
     }
 
     public function down(): void
     {
-        // Menghapus tabel jika perintah php artisan migrate:rollback dijalankan
         Schema::dropIfExists('guru');
     }
 };

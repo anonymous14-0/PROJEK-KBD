@@ -52,8 +52,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->put('security.last_activity_at', now()->timestamp);
 
         // Keamanan: audit log login berhasil untuk investigasi insiden autentikasi.
+        // Keamanan: audit log login berhasil untuk investigasi insiden autentikasi.
         AuditTrail::recordSuccessfulLogin($request);
 
+        $user = $request->user();
+
+        if ($user->must_change_password) {
+            return redirect()->route('profile.edit');
+        }
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

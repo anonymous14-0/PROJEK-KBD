@@ -36,23 +36,35 @@ return new class extends Migration
             $table->integer('nilai_uts');
             $table->integer('nilai_uas');
 
-            $table->string('semester');       // contoh: ganjil/genap
-            $table->string('tahun_ajaran');   // contoh: 2025/2026
+            $table->string('semester');
+            $table->string('tahun_ajaran');
 
-            // Index (biar query cepat)
+            // Index
             $table->index('id_siswa');
             $table->index('id_mapel');
 
-            // Cegah duplikasi nilai (1 siswa 1 mapel 1 semester 1 tahun)
-            $table->unique(['id_siswa', 'id_mapel', 'semester', 'tahun_ajaran']);
+            // Cegah duplikasi nilai
+            $table->unique([
+                'id_siswa',
+                'id_mapel',
+                'semester',
+                'tahun_ajaran'
+            ]);
 
             // Timestamps
             $table->timestamps();
         });
 
-        // Optional: validasi nilai (MySQL 8+)
-        DB::statement("ALTER TABLE nilai ADD CONSTRAINT chk_nilai_uts CHECK (nilai_uts BETWEEN 0 AND 100)");
-        DB::statement("ALTER TABLE nilai ADD CONSTRAINT chk_nilai_uas CHECK (nilai_uas BETWEEN 0 AND 100)");
+        // Optional: validasi nilai (MySQL)
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement(
+                "ALTER TABLE nilai ADD CONSTRAINT chk_nilai_uts CHECK (nilai_uts BETWEEN 0 AND 100)"
+            );
+
+            DB::statement(
+                "ALTER TABLE nilai ADD CONSTRAINT chk_nilai_uas CHECK (nilai_uas BETWEEN 0 AND 100)"
+            );
+        }
     }
 
     /**

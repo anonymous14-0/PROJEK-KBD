@@ -17,22 +17,24 @@ return new class extends Migration
             $table->string('nama_lengkap');
             $table->enum('role', ['admin', 'audit', 'guru', 'siswa']);
 
-            // ID Siswa dan Guru bersifat nullable (boleh kosong)
-            // Karena akun Admin/Audit tidak punya relasi ke tabel guru/siswa
             $table->unsignedBigInteger('id_siswa')->nullable();
             $table->unsignedBigInteger('id_guru')->nullable();
 
-            // Default true, bisa diubah ke false untuk me-nonaktifkan akun
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
 
-            // Soft Delete akun login (sinkron dengan soft delete guru/siswa)
             $table->softDeletes();
 
-            // Relasi ke tabel siswa dan guru
-            $table->foreign('id_siswa')->references('id_siswa')->on('siswa')->onDelete('cascade');
-            $table->foreign('id_guru')->references('id_guru')->on('guru')->onDelete('cascade');
+            $table->foreign('id_siswa')
+                  ->references('id_siswa')
+                  ->on('siswa')
+                  ->onDelete('cascade');
+
+            $table->foreign('id_guru')
+                  ->references('id_guru')
+                  ->on('guru')
+                  ->onDelete('cascade');
 
             $table->index('email');
             $table->index('role');
@@ -56,10 +58,18 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
-            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
+
+            $table->foreign('user_id')
+                  ->references('id_user')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
 
-        DB::statement("ALTER TABLE users ADD CONSTRAINT chk_role CHECK (role IN ('admin','audit','guru','siswa'))");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement(
+                "ALTER TABLE users ADD CONSTRAINT chk_role CHECK (role IN ('admin','audit','guru','siswa'))"
+            );
+        }
     }
 
     public function down(): void

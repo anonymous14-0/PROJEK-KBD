@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nama_mapel');
             $table->string('jurusan');
 
-            // Relasi ke guru (dibuat konsisten seperti tabel lain)
+            // Relasi ke guru
             $table->unsignedBigInteger('id_guru');
 
             $table->foreign('id_guru')
@@ -29,7 +29,7 @@ return new class extends Migration
                   ->on('guru')
                   ->onDelete('cascade');
 
-            // Index (biar query cepat)
+            // Index
             $table->index('nama_mapel');
             $table->index('jurusan');
             $table->index('id_guru');
@@ -39,7 +39,11 @@ return new class extends Migration
         });
 
         // Optional: cegah duplikasi mapel dalam jurusan yang sama
-        DB::statement("ALTER TABLE mata_pelajaran ADD CONSTRAINT unique_mapel_jurusan UNIQUE (nama_mapel, jurusan)");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement(
+                "ALTER TABLE mata_pelajaran ADD CONSTRAINT unique_mapel_jurusan UNIQUE (nama_mapel, jurusan)"
+            );
+        }
     }
 
     /**
