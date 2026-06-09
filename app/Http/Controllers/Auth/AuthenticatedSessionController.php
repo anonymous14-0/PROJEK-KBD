@@ -47,8 +47,11 @@ class AuthenticatedSessionController extends Controller
         // Keamanan: regenerasi Session ID setelah login untuk mencegah session fixation/hijacking.
         $request->session()->regenerate();
 
-        // Keamanan: simpan fingerprint User-Agent dan waktu aktivitas awal untuk validasi sesi berikutnya.
+        // Keamanan: simpan fingerprint User-Agent untuk mendeteksi perubahan client yang mengindikasikan session hijacking.
         $request->session()->put('security.user_agent_hash', hash('sha256', (string) $request->userAgent()));
+        // Keamanan: simpan alamat IP login sebagai binding tambahan agar session curian dari IP berbeda dapat dihentikan.
+        $request->session()->put('security.ip_address', $request->ip());
+        // Keamanan: simpan waktu aktivitas awal untuk validasi idle timeout 30 menit pada request berikutnya.
         $request->session()->put('security.last_activity_at', now()->timestamp);
 
         // Keamanan: audit log login berhasil untuk investigasi insiden autentikasi.
