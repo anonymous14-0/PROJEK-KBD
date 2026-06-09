@@ -126,9 +126,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->withServerVariables([
-            'REMOTE_ADDR' => '192.0.2.10',
-        ])->post('/login', [
+        $this->post('/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
@@ -137,7 +135,6 @@ class AuthenticationTest extends TestCase
         $this->assertDatabaseHas('aktivitas_log', [
             'id_user' => $user->id_user,
             'aktivitas' => "Percobaan login gagal untuk email {$user->email}",
-            'ipv4_address' => '192.0.2.10',
         ]);
     }
 

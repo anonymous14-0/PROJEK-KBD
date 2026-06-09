@@ -27,7 +27,6 @@ class AktivitasLog extends Model
         'id_user',
         'aktivitas',
         'ip_address',
-        'ipv4_address',
         'user_agent'
     ];
 

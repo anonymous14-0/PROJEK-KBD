@@ -25,7 +25,7 @@
                                     <th class="py-5 border-r border-blue-300 w-[18%]">Waktu</th>
                                     <th class="py-5 border-r border-blue-300 w-[20%]">User</th>
                                     <th class="py-5 border-r border-blue-300 w-[10%]">Role</th>
-                                    <th class="py-5 border-r border-blue-300 w-[15%]">IPv4 Address</th>
+                                    <th class="py-5 border-r border-blue-300 w-[15%]">IP Address</th>
                                     <th class="py-5 w-[37%]">Deskripsi Aktivitas</th>
                                 </tr>
                             </thead>
@@ -39,12 +39,7 @@
                                                 {{ $log->user->role ?? '-' }}
                                             </span>
                                         </td>
-                                        <td class="py-4 border-r border-gray-200 font-mono text-xs px-2">
-                                            <div>{{ $log->ipv4_address ?? '-' }}</div>
-                                            @if($log->ip_address && $log->ip_address !== $log->ipv4_address)
-                                                <div class="mt-1 text-[10px] text-gray-400 break-all">IP asli: {{ $log->ip_address }}</div>
-                                            @endif
-                                        </td>
+                                        <td class="py-4 border-r border-gray-200 font-mono text-xs">{{ $log->ip_address ?? '-' }}</td>
                                         <td class="py-4 text-left px-8"><span class="whitespace-pre-line">{{ $log->aktivitas }}</span></td>
                                     </tr>
                                 @empty

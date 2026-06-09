@@ -13,7 +13,6 @@
                         <tr class="border border-gray-300 block md:table-row">
                             <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Waktu</th>
                             <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Pelaku</th>
-                            <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">IPv4 Address</th>
                             <th class="p-2 text-left font-bold md:border md:border-grey-500 block md:table-cell">Deskripsi Aktivitas</th>
                         </tr>
                     </thead>
@@ -22,12 +21,6 @@
                         <tr class="bg-white border border-gray-300 block md:table-row">
                             <td class="p-2 md:border md:border-grey-500 block md:table-cell">{{ $log->created_at }}</td>
                             <td class="p-2 md:border md:border-grey-500 block md:table-cell font-semibold">{{ $log->user->nama_lengkap ?? 'System' }}</td>
-                            <td class="p-2 md:border md:border-grey-500 block md:table-cell font-mono text-sm">
-                                <div>{{ $log->ipv4_address ?? '-' }}</div>
-                                @if($log->ip_address && $log->ip_address !== $log->ipv4_address)
-                                    <div class="text-xs text-gray-500 break-all">IP asli: {{ $log->ip_address }}</div>
-                                @endif
-                            </td>
                             <td class="p-2 md:border md:border-grey-500 block md:table-cell"><span class="whitespace-pre-line">{{ $log->aktivitas }}</span></td>
                         </tr>
                         @endforeach
