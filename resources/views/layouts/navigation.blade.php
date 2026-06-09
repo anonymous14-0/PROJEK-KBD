@@ -8,7 +8,7 @@
             <!-- Kita tidak menggunakan flex-1 di sini agar dia hanya memakan ruang selebar isinya -->
             <div class="flex items-center space-x-4 shrink-0">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('images/LogosekolahK.jpeg') }}" alt="Logo" class="block h-12 w-auto object-contain" 
                              onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=S&background=1e4066&color=fff';">
                     </a>
