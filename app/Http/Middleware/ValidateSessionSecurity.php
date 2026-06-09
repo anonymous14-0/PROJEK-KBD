@@ -17,7 +17,7 @@ class ValidateSessionSecurity
     private const IDLE_TIMEOUT_SECONDS = 1800;
 
     /**
-     * Keamanan: validasi sesi login terhadap timeout dan fingerprint User-Agent pada setiap request web.
+     * Keamanan: validasi sesi login terhadap timeout, fingerprint User-Agent, dan alamat IP pada setiap request web.
      *
      * @param  Closure(Request): (Response)  $next
      */
@@ -31,6 +31,8 @@ class ValidateSessionSecurity
         $lastActivityAt = (int) $request->session()->get('security.last_activity_at', $now);
         $storedUserAgentHash = $request->session()->get('security.user_agent_hash');
         $currentUserAgentHash = hash('sha256', (string) $request->userAgent());
+        $storedIpAddress = $request->session()->get('security.ip_address');
+        $currentIpAddress = (string) $request->ip();
 
         // Keamanan: logout otomatis jika user tidak aktif lebih dari 30 menit.
         if (($now - $lastActivityAt) > self::IDLE_TIMEOUT_SECONDS) {
@@ -46,6 +48,17 @@ class ValidateSessionSecurity
         // Keamanan: logout otomatis jika User-Agent berubah, indikasi potensi session hijacking.
         if (! hash_equals($storedUserAgentHash, $currentUserAgentHash)) {
             return $this->terminateCompromisedSession($request, 'Session dihentikan karena User-Agent berubah.');
+        }
+
+        // Keamanan: set alamat IP untuk sesi lama yang belum memilikinya agar validasi tetap kompatibel setelah deploy.
+        if (! is_string($storedIpAddress) || $storedIpAddress === '') {
+            $request->session()->put('security.ip_address', $currentIpAddress);
+            $storedIpAddress = $currentIpAddress;
+        }
+
+        // Keamanan: logout otomatis jika alamat IP berubah karena session yang sama dipakai dari jaringan berbeda mengindikasikan session hijacking.
+        if (! hash_equals($storedIpAddress, $currentIpAddress)) {
+            return $this->terminateCompromisedSession($request, 'Session dihentikan karena alamat IP berubah.');
         }
 
         // Keamanan: perbarui waktu aktivitas hanya setelah sesi lolos validasi.
